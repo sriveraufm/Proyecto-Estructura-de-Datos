@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module api</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>api</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Cjseba%5Conedrive%5Ccomputer%20science%5Ccs%203er%20semestre%5Cestructura%20de%20datos%5Cproyecto%5Capi.py">c:\users\jseba\onedrive\computer science\cs 3er semestre\estructura de datos\proyecto\api.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="csv.html">csv</a><br>
+<a href="json.html">json</a><br>
+</td><td width="25%" valign=top><a href="os.html">os</a><br>
+<a href="shortuuid.html">shortuuid</a><br>
+</td><td width="25%" valign=top><a href="uuid.html">uuid</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-agregarOrden"><strong>agregarOrden</strong></a>()</dt><dd><tt>API&nbsp;para&nbsp;generar&nbsp;ordenes<br>
+Metodo&nbsp;PUT&nbsp;que&nbsp;solicita&nbsp;un&nbsp;nombre&nbsp;(de&nbsp;producto)&nbsp;y&nbsp;cantidad<br>
+Ejemplo:<br>
+{<br>
+"nombre":"cafe",<br>
+"cantidad":&nbsp;15<br>
+}</tt></dd></dl>
+ <dl><dt><a name="-anular"><strong>anular</strong></a>()</dt><dd><tt>API&nbsp;para&nbsp;anular&nbsp;una&nbsp;orden<br>
+Metodo&nbsp;PUT&nbsp;que&nbsp;solicita&nbsp;un&nbsp;"id"<br>
+ejemplo:<br>
+{<br>
+"id":"DhjVjQwyJs"<br>
+}</tt></dd></dl>
+ <dl><dt><a name="-imprimirOrdenes"><strong>imprimirOrdenes</strong></a>()</dt><dd><tt>Regresa&nbsp;el&nbsp;JSON&nbsp;conteniendo&nbsp;todas&nbsp;las&nbsp;ordenes</tt></dd></dl>
+ <dl><dt><a name="-inventarioAgregrarAPI"><strong>inventarioAgregrarAPI</strong></a>()</dt><dd><tt>API&nbsp;que&nbsp;permite&nbsp;agregar&nbsp;un&nbsp;NUEVO&nbsp;producto&nbsp;al&nbsp;inventario<br>
+Metodo&nbsp;PUT&nbsp;que&nbsp;solicita&nbsp;un&nbsp;"producto",&nbsp;"precio"&nbsp;e&nbsp;"inventario",<br>
+Ejemplo:<br>
+{<br>
+"producto":"leche",<br>
+"precio":&nbsp;12,<br>
+"inventario":&nbsp;220<br>
+},<br>
+Tome&nbsp;en&nbsp;cuenta&nbsp;que&nbsp;el&nbsp;API&nbsp;no&nbsp;permite&nbsp;agregar&nbsp;un&nbsp;producto&nbsp;que&nbsp;ya&nbsp;exista</tt></dd></dl>
+ <dl><dt><a name="-inventarioDescuentos"><strong>inventarioDescuentos</strong></a>()</dt><dd><tt>API&nbsp;que&nbsp;permite&nbsp;realizar&nbsp;descuentos<br>
+Metodo&nbsp;PUT&nbsp;que&nbsp;solicita&nbsp;un&nbsp;"producto"&nbsp;y&nbsp;"descuento"&nbsp;(dado&nbsp;como&nbsp;porcentaje)<br>
+Ejemplo:<br>
+{<br>
+"producto"&nbsp;:&nbsp;"leche",<br>
+"descuento":&nbsp;40<br>
+}</tt></dd></dl>
+ <dl><dt><a name="-inventarioJson"><strong>inventarioJson</strong></a>()</dt><dd><tt>Convierte&nbsp;el&nbsp;linked&nbsp;list&nbsp;de&nbsp;inventario&nbsp;a&nbsp;un&nbsp;diccionario&nbsp;o&nbsp;nested&nbsp;struct&nbsp;que&nbsp;nos&nbsp;permite&nbsp;enviarlo&nbsp;como&nbsp;JSON</tt></dd></dl>
+ <dl><dt><a name="-inventarioModificar"><strong>inventarioModificar</strong></a>()</dt><dd><tt>API&nbsp;que&nbsp;permite&nbsp;modificar&nbsp;el&nbsp;inventario&nbsp;actual&nbsp;del&nbsp;producto&nbsp;dado,<br>
+Metodo&nbsp;PUT&nbsp;que&nbsp;solicita&nbsp;un&nbsp;"producto"&nbsp;e&nbsp;"inventario"<br>
+Ejemplo:<br>
+{<br>
+"producto"&nbsp;:&nbsp;"leche",<br>
+"inventario":&nbsp;100<br>
+}</tt></dd></dl>
+ <dl><dt><a name="-inventarioimprimirAPI"><strong>inventarioimprimirAPI</strong></a>()</dt><dd><tt>Metodo&nbsp;GET&nbsp;que&nbsp;regresa&nbsp;el&nbsp;JSON&nbsp;conteniendo&nbsp;todos&nbsp;los&nbsp;nodos&nbsp;del&nbsp;inventario</tt></dd></dl>
+ <dl><dt><a name="-ordenesJson"><strong>ordenesJson</strong></a>()</dt><dd><tt>Convierte&nbsp;el&nbsp;array&nbsp;multidimensional&nbsp;de&nbsp;ordenes&nbsp;a&nbsp;un&nbsp;diccionario&nbsp;o&nbsp;nested&nbsp;struct&nbsp;que&nbsp;nos&nbsp;permite&nbsp;enviarlo&nbsp;como&nbsp;JSON</tt></dd></dl>
+ <dl><dt><a name="-pagar"><strong>pagar</strong></a>()</dt><dd><tt>API&nbsp;para&nbsp;pagar&nbsp;una&nbsp;orden<br>
+Metodo&nbsp;PUT&nbsp;que&nbsp;solicita&nbsp;un&nbsp;"id"&nbsp;y&nbsp;una&nbsp;"tarjeta"<br>
+Ejemplo:<br>
+{<br>
+"id":&nbsp;"DhjVjQwyJs",<br>
+"tarjeta":&nbsp;"1414"<br>
+}<br>
+Notese&nbsp;que&nbsp;el&nbsp;numero&nbsp;de&nbsp;tarjeta&nbsp;debe&nbsp;ser&nbsp;"1414",&nbsp;esto&nbsp;es&nbsp;para&nbsp;simular&nbsp;una&nbsp;respuesta&nbsp;de&nbsp;VISANET&nbsp;y&nbsp;si&nbsp;se&nbsp;manda&nbsp;un&nbsp;numero&nbsp;de&nbsp;tarjeta&nbsp;invalido&nbsp;el&nbsp;API&nbsp;de&nbsp;VISANET&nbsp;no&nbsp;permitiria&nbsp;realizar&nbsp;un&nbsp;pago</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>FALSE</strong> = b'I00\n'<br>
+<strong>TRUE</strong> = b'I01\n'<br>
+<strong>app</strong> = &lt;Flask 'api'&gt;<br>
+<strong>col</strong> = 5<br>
+<strong>csv_file</strong> = &lt;_io.TextIOWrapper name='inventario.csv' mode='r' encoding='cp1252'&gt;<br>
+<strong>csv_reader</strong> = &lt;_csv.reader object&gt;<br>
+<strong>d</strong> = {'A': 'N', 'B': 'O', 'C': 'P', 'D': 'Q', 'E': 'R', 'F': 'S', 'G': 'T', 'H': 'U', 'I': 'V', 'J': 'W', ...}<br>
+<strong>inventario</strong> = &lt;main.SLinkedList object&gt;<br>
+<strong>line_count</strong> = 0<br>
+<strong>ordenes</strong> = [['ID', 'NOMBRE', 'CANTIDAD', 'ESTADO', 'TOTAL'], ['DhjVjQwyJs', 'CAFE', '15', 'PAGADA', '180.0'], ['9PZzkrSquK', 'CAFE', '15', 'PENDIENTE', '180.0'], ['QQtbzvqSvo', 'CAFE', '15', 'PENDIENTE', '100'], ['Krv6V28zPc', 'CAFE', '15', 'PENDIENTE', '180.0']]<br>
+<strong>request</strong> = &lt;LocalProxy unbound&gt;<br>
+<strong>row</strong> = 0<br>
+<strong>rows</strong> = []</td></tr></table>
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>main</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Cjseba%5Conedrive%5Ccomputer%20science%5Ccs%203er%20semestre%5Cestructura%20de%20datos%5Cproyecto%5Cmain.py">c:\users\jseba\onedrive\computer science\cs 3er semestre\estructura de datos\proyecto\main.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="csv.html">csv</a><br>
+</td><td width="25%" valign=top><a href="json.html">json</a><br>
+</td><td width="25%" valign=top><a href="os.html">os</a><br>
+</td><td width="25%" valign=top><a href="uuid.html">uuid</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="main.html#Node">Node</a>
+</font></dt><dt><font face="helvetica, arial"><a href="main.html#SLinkedList">SLinkedList</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Node">class <strong>Node</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Node">Node</a>(dataval=None)<br>
+&nbsp;<br>
+Define&nbsp;el&nbsp;Nodo&nbsp;que&nbsp;utilizaremos&nbsp;en&nbsp;la&nbsp;linked&nbsp;list&nbsp;del&nbsp;inventario<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Node-__init__"><strong>__init__</strong></a>(self, dataval=None)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="SLinkedList">class <strong>SLinkedList</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Define&nbsp;la&nbsp;linked&nbsp;list&nbsp;que&nbsp;utilizaremos&nbsp;para&nbsp;manejar&nbsp;nuestro&nbsp;inventario<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="SLinkedList-__init__"><strong>__init__</strong></a>(self)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="SLinkedList-agregar"><strong>agregar</strong></a>(self, newdata, save=None)</dt><dd><tt>Agrega&nbsp;un&nbsp;nuevo&nbsp;valor&nbsp;al&nbsp;nodo</tt></dd></dl>
+
+<dl><dt><a name="SLinkedList-borrar"><strong>borrar</strong></a>(self, nrow)</dt><dd><tt>Elimina&nbsp;el&nbsp;nodo&nbsp;de&nbsp;la&nbsp;linked&nbsp;list&nbsp;en&nbsp;la&nbsp;posicion&nbsp;dada</tt></dd></dl>
+
+<dl><dt><a name="SLinkedList-exportarcsv"><strong>exportarcsv</strong></a>(self)</dt><dd><tt>Exporta&nbsp;la&nbsp;lista&nbsp;a&nbsp;un&nbsp;archivo&nbsp;csv&nbsp;para&nbsp;poder&nbsp;guardar&nbsp;los&nbsp;cambios</tt></dd></dl>
+
+<dl><dt><a name="SLinkedList-getNode"><strong>getNode</strong></a>(self, indice)</dt><dd><tt>imprime&nbsp;el&nbsp;nodo&nbsp;dado&nbsp;el&nbsp;indice&nbsp;de&nbsp;la&nbsp;lista</tt></dd></dl>
+
+<dl><dt><a name="SLinkedList-listfind"><strong>listfind</strong></a>(self, producto)</dt><dd><tt>busca&nbsp;el&nbsp;nodo&nbsp;que&nbsp;contenga&nbsp;el&nbsp;producto&nbsp;dado</tt></dd></dl>
+
+<dl><dt><a name="SLinkedList-listmodify"><strong>listmodify</strong></a>(self, producto, newval, columna)</dt><dd><tt>Funcion&nbsp;para&nbsp;modificar&nbsp;un&nbsp;nuevo&nbsp;valor&nbsp;de&nbsp;cualquier&nbsp;"columna"&nbsp;que&nbsp;le&nbsp;digmaos&nbsp;del&nbsp;nodo</tt></dd></dl>
+
+<dl><dt><a name="SLinkedList-listprint"><strong>listprint</strong></a>(self)</dt><dd><tt>imprime&nbsp;todos&nbsp;los&nbsp;nodos&nbsp;de&nbsp;la&nbsp;lista</tt></dd></dl>
+
+<dl><dt><a name="SLinkedList-rows"><strong>rows</strong></a>(self)</dt><dd><tt>funcion&nbsp;simple&nbsp;para&nbsp;calcular&nbsp;el&nbsp;largo&nbsp;de&nbsp;la&nbsp;lista</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-eliminar"><strong>eliminar</strong></a>(nbr)</dt><dd><tt>Elimina&nbsp;la&nbsp;orden&nbsp;dado&nbsp;el&nbsp;id</tt></dd></dl>
+ <dl><dt><a name="-guardar"><strong>guardar</strong></a>()</dt><dd><tt>Guarda&nbsp;el&nbsp;array&nbsp;multidimensional&nbsp;de&nbsp;ordenes&nbsp;en&nbsp;un&nbsp;archivo&nbsp;csv&nbsp;para&nbsp;conservar&nbsp;los&nbsp;cambios</tt></dd></dl>
+ <dl><dt><a name="-mayus"><strong>mayus</strong></a>(palabra)</dt><dd><tt>convierte&nbsp;a&nbsp;mayuscula&nbsp;la&nbsp;palabra&nbsp;o&nbsp;&nbsp;string&nbsp;dada</tt></dd></dl>
+ <dl><dt><a name="-printOrdenes"><strong>printOrdenes</strong></a>()</dt><dd><tt>Imprime&nbsp;el&nbsp;array&nbsp;multidimensional&nbsp;de&nbsp;ordenes</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>FALSE</strong> = b'I00\n'<br>
+<strong>TRUE</strong> = b'I01\n'<br>
+<strong>col</strong> = 5<br>
+<strong>csv_file</strong> = &lt;_io.TextIOWrapper name='inventario.csv' mode='r' encoding='cp1252'&gt;<br>
+<strong>csv_reader</strong> = &lt;_csv.reader object&gt;<br>
+<strong>inventario</strong> = &lt;main.SLinkedList object&gt;<br>
+<strong>line_count</strong> = 0<br>
+<strong>ordenes</strong> = [['ID', 'NOMBRE', 'CANTIDAD', 'ESTADO', 'TOTAL'], ['DhjVjQwyJs', 'CAFE', '15', 'PAGADA', '180.0'], ['9PZzkrSquK', 'CAFE', '15', 'PENDIENTE', '180.0'], ['QQtbzvqSvo', 'CAFE', '15', 'PENDIENTE', '100'], ['Krv6V28zPc', 'CAFE', '15', 'PENDIENTE', '180.0']]<br>
+<strong>row</strong> = 0<br>
+<strong>rows</strong> = []</td></tr></table>
+</body></html>
