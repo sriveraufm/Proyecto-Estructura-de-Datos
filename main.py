@@ -3,6 +3,7 @@ import csv
 import uuid
 import os.path
 import json
+import cProfile
 
 from flask import jsonify
 
@@ -28,6 +29,7 @@ class Node:
   def __init__(self, dataval=None):
       self.dataval = dataval
       self.nextval = None
+  cProfile.runctx("__init__", globals(), locals())
 
 
 
@@ -128,6 +130,15 @@ class SLinkedList:
         writer = csv.writer(f)
         writer.writerows([nodo.dataval])
         nodo = nodo.nextval
+  cProfile.runctx("__init__", globals(), locals())
+  cProfile.runctx("agregar", globals(), locals())
+  cProfile.runctx("borrar", globals(), locals())
+  cProfile.runctx("rows", globals(), locals())
+  cProfile.runctx("listprint", globals(), locals())
+  cProfile.runctx("listfind", globals(), locals())
+  cProfile.runctx("getNode", globals(), locals())
+  cProfile.runctx("listmodify", globals(), locals())
+  cProfile.runctx("exportarcsv", globals(), locals())
           
 
 def mayus(palabra):
@@ -179,6 +190,11 @@ def printOrdenes():
     '''Imprime el array multidimensional de ordenes'''
     for r in ordenes:
       print( ' '.join([str(x) for x in r] ) ) 
+cProfile.run("mayus")
+cProfile.run("eliminar")
+cProfile.run("menu")
+cProfile.run("guardar")
+cProfile.run("printOrdenes")
 
   
 
