@@ -190,9 +190,10 @@ def printOrdenes():
     '''Imprime el array multidimensional de ordenes'''
     for r in ordenes:
       print( ' '.join([str(x) for x in r] ) ) 
-cProfile.run("mayus")
+
+cProfile.runctx("mayus", globals(), locals())
+# cProfile.run("mayus")
 cProfile.run("eliminar")
-cProfile.run("menu")
 cProfile.run("guardar")
 cProfile.run("printOrdenes")
 
