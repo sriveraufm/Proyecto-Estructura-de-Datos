@@ -192,10 +192,10 @@ def printOrdenes():
       print( ' '.join([str(x) for x in r] ) ) 
 
 cProfile.runctx("mayus", globals(), locals())
-# cProfile.run("mayus")
-cProfile.run("eliminar")
-cProfile.run("guardar")
-cProfile.run("printOrdenes")
+cProfile.runctx("eliminar", globals(), locals())
+cProfile.runctx("guardar", globals(), locals())
+cProfile.runctx("printOrdenes", globals(), locals())
+
 
   
 
