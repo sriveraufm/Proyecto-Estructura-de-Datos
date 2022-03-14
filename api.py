@@ -2,10 +2,30 @@ from this import d
 from flask import Flask, jsonify, request
 from main import *
 import json
-app = Flask(__name__)
 import shortuuid
 from flask import Flask, render_template, request, flash, redirect, url_for
 #
+import flask_profiler
+
+app = Flask(__name__)
+app.config["DEBUG"] = True 
+
+
+app.config["flask_profiler"] = {
+    "enabled": app.config["DEBUG"],
+    "storage": {
+        "engine": "sqlite"
+    },
+    "ignore": [
+	    "^/static/.*"
+	]
+}
+
+#  "basicAuth":{
+    #     "enabled": True,
+    #     "username": "admin",
+    #     "password": "admin"
+    # },
 
 def ordenesJson():
     '''Convierte el array multidimensional de ordenes a un diccionario o nested struct que nos permite enviarlo como JSON'''
@@ -205,6 +225,10 @@ def inventarioDescuentos():
         return jsonify({'message' : "Descuento aplicado exitosamente"})
     else:
         return jsonify({'message' : "El producto que desea aplicar el descuento no existe"})
+
+
+flask_profiler.init_app(app)
+
 
 @app.route("/docs")
 def docs():
