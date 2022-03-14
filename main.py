@@ -130,15 +130,6 @@ class SLinkedList:
         writer = csv.writer(f)
         writer.writerows([nodo.dataval])
         nodo = nodo.nextval
-  cProfile.runctx("__init__", globals(), locals())
-  cProfile.runctx("agregar", globals(), locals())
-  cProfile.runctx("borrar", globals(), locals())
-  cProfile.runctx("rows", globals(), locals())
-  cProfile.runctx("listprint", globals(), locals())
-  cProfile.runctx("listfind", globals(), locals())
-  cProfile.runctx("getNode", globals(), locals())
-  cProfile.runctx("listmodify", globals(), locals())
-  cProfile.runctx("exportarcsv", globals(), locals())
           
 
 def mayus(palabra):
@@ -190,14 +181,6 @@ def printOrdenes():
     '''Imprime el array multidimensional de ordenes'''
     for r in ordenes:
       print( ' '.join([str(x) for x in r] ) ) 
-
-cProfile.runctx("mayus", globals(), locals())
-cProfile.runctx("eliminar", globals(), locals())
-cProfile.runctx("guardar", globals(), locals())
-cProfile.runctx("printOrdenes", globals(), locals())
-
-
-  
-
+      
 
 
