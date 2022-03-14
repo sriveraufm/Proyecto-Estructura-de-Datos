@@ -5,7 +5,7 @@ import json
 app = Flask(__name__)
 import shortuuid
 from flask import Flask, render_template, request, flash, redirect, url_for
-
+#
 
 def ordenesJson():
     '''Convierte el array multidimensional de ordenes a un diccionario o nested struct que nos permite enviarlo como JSON'''
