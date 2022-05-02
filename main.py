@@ -4,10 +4,14 @@ import uuid
 import os.path
 import json
 import cProfile
-#1
+from queue import Queue
 from flask import jsonify
 
 # ordenes csv
+
+ordenesQueue = Queue(maxsize = 6)
+
+
 col = 5
 row = 0
 ordenes = [[0] * col for i in range(row)]

@@ -17,7 +17,7 @@ app.config["flask_profiler"] = {
         "engine": "sqlite"
     },
     "ignore": [
-	    "^/static/.*"
+	"^/static/.*"
 	]
 }
 
@@ -55,6 +55,21 @@ def imprimirOrdenes():
     Regresa el JSON conteniendo todas las ordenes'''
     return jsonify(ordenesJson())
 
+# despachar ordenes
+@app.route('/ordenes/despachar', methods=['GET'])
+def despacharOrden():
+    if ordenesQueue.qsize() > 0:
+        mensaje = "La orden",ordenesQueue.get(), "ha sido despachada."
+        return jsonify({'message' : " ".join(mensaje)})
+    else:
+        return jsonify({'message' : "No hay órdenes en la lista de espera de despacho."})
+
+# ordenes queue
+@app.route('/ordenes/queue', methods=['GET'])
+def queueOrden():
+    return jsonify({'message' : ordenesQueue.queue})
+
+
 # generar orden
 @app.route('/ordenes/generar', methods=['PUT'])
 def agregarOrden():
@@ -75,13 +90,18 @@ def agregarOrden():
     productoInventario = inventario.listfind(prodA)
     if(productoInventario is not None):
         if(int(productoInventario[2])>=totalA):
-            total = totalA * float(productoInventario[1])
-            ordenes.append([j for j in [idA,prodA,totalA,"PENDIENTE",total]])
-            # valorPrueba=int(productoInventario[2]) - totalA
-            # #print(valorPrueba)
-            inventario.listmodify(prodA,(int(productoInventario[2]) - totalA), 'Inventario')
-            guardar()
-            return jsonify({'message' : "Orden agregada exitosamente"})
+            if not ordenesQueue.full():
+                total = totalA * float(productoInventario[1])
+                ordenes.append([j for j in [idA,prodA,totalA,"PENDIENTE",total]])
+                # valorPrueba=int(productoInventario[2]) - totalA
+                # #print(valorPrueba)
+                inventario.listmodify(prodA,(int(productoInventario[2]) - totalA), 'Inventario')
+                guardar()
+                ordenesQueue.put(idA)
+                return jsonify({'message' : "Orden agregada exitosamente"})
+            else:
+                return jsonify({'message' : "Límite de órdenes diario alcanzado"})
+
         else:
             return jsonify({'message' : "El producto que desea comprar no cuenta con suficiente existencias, lo sentimos."})
     else:
