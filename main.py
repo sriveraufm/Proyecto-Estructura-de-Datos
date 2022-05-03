@@ -1,16 +1,42 @@
 from pickle import FALSE, TRUE
 import csv
+from sys import maxsize
 import uuid
 import os.path
 import json
 import cProfile
-from queue import Queue
+
 from flask import jsonify
 
 # ordenes csv
 
-ordenesQueue = Queue(maxsize = 6)
 
+class Queue:
+    #inicializacion
+    def __init__(self, maxsize):
+        self.queue = []
+    #agregar un valor al queue
+    def add(self, valor):
+        if(self.size() < 6):
+          self.queue.append(valor)
+
+    def get(self):
+        return self.queue.pop(0)
+
+    def size(self):
+        return len(self.queue)
+
+    def top(self):
+          return self.queue[0]
+
+    def full(self):
+        return len(self.queue) == maxsize
+        
+    def empty(self):
+        return len(self.queue) == 0
+
+
+ordenesQueue = Queue(maxsize=6)
 
 col = 5
 row = 0

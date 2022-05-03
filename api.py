@@ -58,7 +58,7 @@ def imprimirOrdenes():
 # despachar ordenes
 @app.route('/ordenes/despachar', methods=['GET'])
 def despacharOrden():
-    if ordenesQueue.qsize() > 0:
+    if ordenesQueue.size() > 0:
         mensaje = "La orden",ordenesQueue.get(), "ha sido despachada."
         return jsonify({'message' : " ".join(mensaje)})
     else:
@@ -67,7 +67,10 @@ def despacharOrden():
 # ordenes queue
 @app.route('/ordenes/queue', methods=['GET'])
 def queueOrden():
-    return jsonify({'message' : ordenesQueue.queue})
+    if ordenesQueue.empty():
+        return jsonify({'message' : 'No hay ordenes en la lista de espera'})
+    else:
+        return jsonify({'message' : ordenesQueue.queue})
 
 
 # generar orden
@@ -97,7 +100,7 @@ def agregarOrden():
                 # #print(valorPrueba)
                 inventario.listmodify(prodA,(int(productoInventario[2]) - totalA), 'Inventario')
                 guardar()
-                ordenesQueue.put(idA)
+                ordenesQueue.add(idA)
                 return jsonify({'message' : "Orden agregada exitosamente"})
             else:
                 return jsonify({'message' : "Límite de órdenes diario alcanzado"})
