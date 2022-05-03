@@ -17,7 +17,7 @@ class Queue:
         self.queue = []
     #agregar un valor al queue
     def add(self, valor):
-        if(self.size() < 6):
+        if(self.size() < maxsize):
           self.queue.append(valor)
 
     def get(self):
@@ -31,7 +31,7 @@ class Queue:
 
     def full(self):
         return len(self.queue) == maxsize
-        
+
     def empty(self):
         return len(self.queue) == 0
 
