@@ -14,26 +14,31 @@ from flask import jsonify
 bplustree = BPlusTree(order=4)
 
 class Queue:
-    #inicializacion
+    '''Define nuestro queue'''
+    '''inicializacion'''
     def __init__(self, maxsize):
         self.queue = []
-    #agregar un valor al queue
+        self.maxsize = maxsize
+    '''agregar un valor al queue'''
     def add(self, valor):
-        if(self.size() < maxsize):
+        if(self.size() < self.maxsize):
           self.queue.append(valor)
-
+    '''imprime y quita el primer elemento del queue'''
     def get(self):
-        return self.queue.pop(0)
-
+        if(self.size() > 0):
+          return self.queue.pop(0)
+        else:
+            return None
+    '''regresa el tamaño del queue'''
     def size(self):
         return len(self.queue)
-
+    '''imprime el primer elemento del queue sin borrarlo'''
     def top(self):
           return self.queue[0]
-
+    '''regresa si el queue esta lleno o no'''
     def full(self):
-        return len(self.queue) == maxsize
-
+        return self.size() == self.maxsize
+    '''regresa si el queue esta vacio o no'''
     def empty(self):
         return len(self.queue) == 0
 

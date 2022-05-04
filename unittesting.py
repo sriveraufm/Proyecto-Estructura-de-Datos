@@ -1,6 +1,7 @@
+import queue
 import unittest
 from main import SLinkedList, Node
-
+from main import *
 
 
 class TestMain(unittest.TestCase):
@@ -68,6 +69,37 @@ class TestMain(unittest.TestCase):
         self.assertEqual(mod1.headval.nextval.dataval,['CAFE', 13,250])
         mod1.listmodify('CAFE','COFFEE',"Producto")
         self.assertEqual(mod1.headval.nextval.dataval,['COFFEE', 13,250])
+
+    def test_queue(self):
+        queuetest = Queue(maxsize=6)
+        queuetest.add('CAFE')
+        self.assertEqual(queuetest.queue, ['CAFE'])
+        queuetest.add('LECHE')
+        queuetest.add('PAN')
+        queuetest.add('CARNE')
+        self.assertEqual(queuetest.queue, ['CAFE', 'LECHE', 'PAN', 'CARNE'])
+        queuetest.get()
+        self.assertEqual(queuetest.queue, ['LECHE', 'PAN', 'CARNE'])
+        self.assertEqual(queuetest.top(), 'LECHE')
+        self.assertEqual(queuetest.full(), False)
+        self.assertEqual(queuetest.empty(), False)
+        self.assertEqual(queuetest.size(), 3)
+        self.assertEqual(queuetest.get(), 'LECHE')
+        self.assertEqual(queuetest.get(), 'PAN')
+        self.assertEqual(queuetest.get(), 'CARNE')
+        self.assertEqual(queuetest.get(), None)
+        self.assertEqual(queuetest.size(), 0)
+        self.assertEqual(queuetest.empty(), True)
+        queuetest.add('LECHE')
+        queuetest.add('PAN')
+        queuetest.add('CARNE')
+        queuetest.add('CHOCOLATE')
+        queuetest.add('AGUA')
+        queuetest.add('MANZANA')
+        #max size
+        queuetest.add('PERA')
+        self.assertEqual(queuetest.size(), 6)
+        self.assertEqual(queuetest.full(), True)
 
 
         
