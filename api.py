@@ -197,7 +197,8 @@ def inventarioAgregrarAPI():
     BPlusTreeV2.bplustree.show()
     precio = float(list(orden.values())[1])
     inv = int(list(orden.values())[2])
-    if(inventario.listfind(producto) is not None):
+    # if(inventario.listfind(producto) is not None):
+    if(BPlusTreeV2.bplustree.retrieve(producto) is not None):
         return(jsonify({"message" : "Este producto ya existe en el inventario, por favor verifique"}))
     else:
         if(inventario.headval.nextval is None):
