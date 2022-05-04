@@ -6,19 +6,47 @@ import shortuuid
 from flask import Flask, render_template, request, flash, redirect, url_for
 #
 import flask_profiler
+import sqlite3
+import threading
 
+
+# Define the lock globally
+lock = threading.Lock()
+
+def Func(host,cursor,db):
+    try:
+        lock.acquire(True)
+        res = cursor.execute('''...''',(host,))
+        # do something
+    finally:
+        lock.release()
 
 app = Flask(__name__)
+
 app.config["DEBUG"] = True 
 
 
+# app.config["flask_profiler"] = {
+#     "enabled": app.config["DEBUG"],
+#     "storage": {
+#         "engine": "sqlite"
+#     },
+#     "ignore": [
+# 	"^/static/.*"
+# 	]
+# }
 app.config["flask_profiler"] = {
     "enabled": app.config["DEBUG"],
     "storage": {
         "engine": "sqlite"
     },
+    "basicAuth":{
+        "enabled": True,
+        "username": "admin",
+        "password": "admin"
+    },
     "ignore": [
-	"^/static/.*"
+	    "^/static/.*"
 	]
 }
 
@@ -161,16 +189,6 @@ def anular():
     if g==0:
         return(jsonify({"message" : "La orden no ha sido encontrada"}))
 
-# # eliminar ordenes, esta no sirve !
-# @app.route('/ordenes/eliminar', methods=['PUT'])
-# def eliminarAPi():
-#     orden = {'ID' : request.json['id']}
-#     idR = str(list(orden.values())[0])
-#     ordenes = eliminar(idR)
-#     # printOrdenes()
-#     return(jsonify({"message" :"El producto ha sido eliminado"}))
-#     # return(jsonify({"message" :"El producto no fue encontrado"}))  
-
 @app.route('/inventario', methods=['GET'])
 def inventarioimprimirAPI():
     '''
@@ -181,6 +199,7 @@ def inventarioimprimirAPI():
 
 @app.route('/inventario/buscar', methods=['GET'])
 def inventarioBuscarAPI():
+        '''permite buscar en el arbol si existe el producto dado'''
         orden = {'PRODUCTO' : request.json['producto']}
         producto = mayus(str(list(orden.values())[0]))
         if(bplustree.retrieve(producto) is not None):
@@ -266,10 +285,9 @@ def inventarioDescuentos():
 
 flask_profiler.init_app(app)
 
-
 @app.route("/docs")
 def docs():
     return render_template('api.html')
 
 if __name__ == '__main__':
-	app.run(debug=True)
+	app.run(host="127.0.0.1", port=5000)
