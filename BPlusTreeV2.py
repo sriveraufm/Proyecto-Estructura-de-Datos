@@ -183,7 +183,7 @@ def demo_bplustree():
     bplustree.show()
 
     print('\nB+ tree with 3 items...')
-    bplustree.insert('7971987983618763ggfd','7971987983618763ggfd')
+    bplustree.insert('7971987983618763ggd','7971987983618763ggd')
     bplustree.show()
 
     print('\nRetrieving values with key e...')
