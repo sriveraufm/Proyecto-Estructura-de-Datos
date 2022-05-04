@@ -182,34 +182,6 @@ def demo_bplustree():
     bplustree.insert('1870fdjaka991kla9', '1870fdjaka991kla9')
     bplustree.show()
 
-    # print('\nB+ tree with 3 items...')
-    # bplustree.insert('c', 'charlie')
-    # bplustree.show()
-
-    # print('\nB+ tree with 4 items...')
-    # bplustree.insert('d', 'delta')
-    # bplustree.show()
-
-    # print('\nB+ tree with 5 items...')
-    # bplustree.insert('e', 'echo')
-    # bplustree.show()
-
-    # print('\nB+ tree with 6 items...')
-    # bplustree.insert('f', 'foxtrot')
-    # bplustree.show()
-
-    # print('\nB+ tree with 7 items...')
-    # bplustree.insert('g', 'golfo')
-    # bplustree.show()
-
-    # print('\nB+ tree with 8 items...')
-    # bplustree.insert('e', 'ector')
-    # bplustree.show()
-
-    # print('\nB+ tree with 9 items...')
-    # bplustree.insert('e', 'elefante')
-    # bplustree.show()
-
     print('\nB+ tree with 3 items...')
     bplustree.insert('7971987983618763ggfd','7971987983618763ggfd')
     bplustree.show()
