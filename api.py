@@ -82,6 +82,7 @@ def imprimirOrdenes():
     '''
     GET http://127.0.0.1:5000/ordenes
     Regresa el JSON conteniendo todas las ordenes'''
+    registro.add('GET ORDENES, EXITOSO')
     return jsonify(ordenesJson())
 
 # despachar ordenes
@@ -89,16 +90,20 @@ def imprimirOrdenes():
 def despacharOrden():
     if ordenesQueue.size() > 0:
         mensaje = "La orden",ordenesQueue.get(), "ha sido despachada."
+        registro.add('DESPACHO DE ORDEN, EXITOSO')
         return jsonify({'message' : " ".join(mensaje)})
     else:
+        registro.add('DESPACHO DE ORDEN, FALLIDO')
         return jsonify({'message' : "No hay órdenes en la lista de espera de despacho."})
 
 # ordenes queue
 @app.route('/ordenes/queue', methods=['GET'])
 def queueOrden():
     if ordenesQueue.empty():
+        registro.add('GET ORDENES QUEUE, FALLIDO')
         return jsonify({'message' : 'No hay ordenes en la lista de espera'})
     else:
+        registro.add('GET ORDENES QUEUE, EXITOSO')
         return jsonify({'message' : ordenesQueue.queue})
 
 
@@ -130,13 +135,17 @@ def agregarOrden():
                 inventario.listmodify(prodA,(int(productoInventario[2]) - totalA), 'Inventario')
                 guardar()
                 ordenesQueue.add(idA)
+                registro.add('AGREGAR ORDEN, EXITOSO')
                 return jsonify({'message' : "Orden agregada exitosamente"})
             else:
+                registro.add('AGREGAR ORDEN, FALLIDO')
                 return jsonify({'message' : "Límite de órdenes diario alcanzado"})
 
         else:
+            registro.add('AGREGAR ORDEN, FALLIDO')
             return jsonify({'message' : "El producto que desea comprar no cuenta con suficiente existencias, lo sentimos."})
     else:
+        registro.add('AGREGAR ORDEN, FALLIDO')
         return jsonify({'message' : "El producto que desea comprar no existe"})
     # ordenes.append([j for j in [orden,"PENDIENTE",0]])
     
@@ -156,6 +165,7 @@ def pagar():
     idR = str(list(orden.values())[0])
     tarjeta = str(list(orden.values())[1])
     if(tarjeta != '1414'):# SIMULACION DE RESPUESTA DE VISANET
+        registro.add('PAGAR ORDEN, FALLIDO')
         return(jsonify({'message' : "El metodo de pago no ha sido aceptado."}))
     g = 0
     for k in range(0,len(ordenes)):
@@ -163,8 +173,10 @@ def pagar():
             ordenes[k][3]="PAGADA"
             g = 1
             guardar()
+            registro.add('PAGAR ORDEN, EXITOSO')
             return(jsonify({"message" :"Orden pagada con exito"}))
     if g==0:
+        registro.add('PAGAR ORDEN, FALLIDO')
         return(jsonify({"message" : "La orden no ha sido encontrada"}))
 
 # anular orden
@@ -185,8 +197,10 @@ def anular():
             ordenes[k][3]="ANULADA"
             g = 1
             guardar()
+            registro.add('ANULAR ORDEN, EXITOSO')
             return(jsonify({"message" :"Orden anulada con exito"}))
     if g==0:
+        registro.add('ANULAR ORDEN, FALLIDO')
         return(jsonify({"message" : "La orden no ha sido encontrada"}))
 
 @app.route('/inventario', methods=['GET'])
@@ -203,8 +217,10 @@ def inventarioBuscarAPI():
         orden = {'PRODUCTO' : request.json['producto']}
         producto = mayus(str(list(orden.values())[0]))
         if(bplustree.retrieve(producto) is not None):
+            registro.add('BUSCAR PRODUCTO, EXITOSO')
             return(jsonify({"message" : "Este producto si existe en el inventario"}))
         else:
+            registro.add('BUSCAR PRODUCTO, FALLIDO')
             return(jsonify({"message" : "Este producto no existe en el inventario"}))
 
 @app.route('/inventario/agregar', methods=['PUT'])
@@ -226,6 +242,7 @@ def inventarioAgregrarAPI():
     inv = int(list(orden.values())[2])
     # if(inventario.listfind(producto) is not None):
     if(bplustree.retrieve(producto) is not None):
+        registro.add('AGREGAR INVENTARIO, FALLIDO')
         return(jsonify({"message" : "Este producto ya existe en el inventario, por favor verifique"}))
     else:
         if(inventario.headval.nextval is None):
@@ -234,6 +251,7 @@ def inventarioAgregrarAPI():
             inventario.agregar([producto, precio, inv])
         bplustree.insert(str(producto), str(producto))
         # bplustree.show()
+        registro.add('AGREGAR INVENTARIO, EXITOSO')
         return(jsonify({"message" : "Producto agregado con exito al inventario"}))
 
 @app.route('/inventario/modificar', methods=['PUT'])
@@ -250,13 +268,16 @@ def inventarioModificar():
     prodA = mayus(str(list(orden.values())[0]))
     inv = int(list(orden.values())[1])
     if(inv < 0):
+        registro.add('MODIFICAR INVENTARIO, FALLIDO')
         return jsonify({'message' : "No puede haber un inventario negativo"})
     productoInventario = inventario.listfind(prodA)
     if(productoInventario is not None):
         inventario.listmodify(prodA,inv, 'Inventario')
         guardar()
+        registro.add('MODIFICAR INVENTARIO, EXITOSO')
         return jsonify({'message' : "Nuevo inventario modificado exitosamente"})
     else:
+        registro.add('MODIFICAR INVENTARIO, FALLIDO')
         return jsonify({'message' : "El producto que desea modificar no existe"})
 
 @app.route('/inventario/descuento', methods=['PUT'])
@@ -273,15 +294,22 @@ def inventarioDescuentos():
     prodA = mayus(str(list(orden.values())[0]))
     descuento = float(list(orden.values())[1])
     if(descuento > 100):
+        registro.add('APLICAR DESCUENTO, FALLIDO')
         return jsonify({'message' : "El descuento debe ser un porcentaje"})
     productoInventario = inventario.listfind(prodA)
     if(productoInventario is not None):
         inventario.listmodify(prodA,float(productoInventario[1]) - (float(productoInventario[1]) * float(descuento)/100), 'Precio')
         guardar()
+        registro.add('APLICAR DESCUENTO, EXITOSO')
         return jsonify({'message' : "Descuento aplicado exitosamente"})
     else:
+        registro.add('APLICAR DESCUENTO, FALLIDO')
         return jsonify({'message' : "El producto que desea aplicar el descuento no existe"})
 
+
+@app.route('/registro', methods=['GET'])
+def registroGet():
+    return jsonify({'message' : str(registro)})
 
 flask_profiler.init_app(app)
 

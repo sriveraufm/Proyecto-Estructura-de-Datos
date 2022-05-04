@@ -13,6 +13,34 @@ from flask import jsonify
 
 bplustree = BPlusTree(order=4)
 
+
+class Node:
+	def __init__(self, value = None):
+		self.dataval = value
+		self.nextval = None
+
+class Stack:
+    def __init__(self):
+        self.headval = Node()
+        
+    def get(self):
+        nodo = self.headval.nextval
+        stackArr = []
+        while nodo:
+            stackArr.append(str(nodo.dataval))
+            nodo = nodo.nextval
+        return stackArr
+
+    def add(self, dataval):
+        node = Node(dataval)
+        node.nextval = self.headval.nextval
+        self.headval.nextval = node
+
+
+registro = Stack()
+
+
+
 class Queue:
     '''Define nuestro queue'''
     '''inicializacion'''
