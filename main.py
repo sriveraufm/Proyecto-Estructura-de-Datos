@@ -352,6 +352,7 @@ if os.path.isfile('inventario.csv'):
           if(any(rows)):
             # print([j for j in rows])
             inventario.agregar([j for j in rows],0)
+            bplustree.insert(str(rows[0]), str(rows[0]))
   # inventario.headval.nextval = None
 else:
   inventario.headval = Node(["Producto","Precio","Inventario"])# columnas

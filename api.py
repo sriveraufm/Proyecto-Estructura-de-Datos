@@ -179,6 +179,15 @@ def inventarioimprimirAPI():
     return jsonify(inventarioJson())
 
 
+@app.route('/inventario/buscar', methods=['GET'])
+def inventarioBuscarAPI():
+        orden = {'PRODUCTO' : request.json['producto']}
+        producto = mayus(str(list(orden.values())[0]))
+        if(bplustree.retrieve(producto) is not None):
+            return(jsonify({"message" : "Este producto si existe en el inventario"}))
+        else:
+            return(jsonify({"message" : "Este producto no existe en el inventario"}))
+
 @app.route('/inventario/agregar', methods=['PUT'])
 def inventarioAgregrarAPI():
     '''API que permite agregar un NUEVO producto al inventario
@@ -198,8 +207,6 @@ def inventarioAgregrarAPI():
     inv = int(list(orden.values())[2])
     # if(inventario.listfind(producto) is not None):
     if(bplustree.retrieve(producto) is not None):
-        print('aqui')
-        print(bplustree.retrieve(producto))
         return(jsonify({"message" : "Este producto ya existe en el inventario, por favor verifique"}))
     else:
         if(inventario.headval.nextval is None):
