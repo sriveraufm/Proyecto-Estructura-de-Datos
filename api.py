@@ -208,6 +208,7 @@ def inventarioimprimirAPI():
     '''
     GET http://127.0.0.1:5000/inventario
     Metodo GET que regresa el JSON conteniendo todos los nodos del inventario'''
+    registro.add('VER INVENTARIO, EXITOSO')
     return jsonify(inventarioJson())
 
 
