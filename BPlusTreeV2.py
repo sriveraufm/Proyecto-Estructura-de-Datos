@@ -148,3 +148,5 @@ class BPlusTree(object):
 
     def show(self):
         self.root.show()
+
+# Fuente: https://gist.github.com/savarin/69acd246302567395f65ad6b97ee503d
