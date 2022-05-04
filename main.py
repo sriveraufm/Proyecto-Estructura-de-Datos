@@ -15,14 +15,16 @@ bplustree = BPlusTree(order=4)
 
 
 class Node:
-	def __init__(self, value = None):
-		self.dataval = value
-		self.nextval = None
+  '''Clase de nodo para el stack'''
+  def __init__(self, value = None):
+    self.dataval = value
+    self.nextval = None
 
 class Stack:
+    '''Inicializacion del stack'''
     def __init__(self):
         self.headval = Node()
-        
+    ''' funcion para regresar el stack como una lista'''
     def get(self):
         nodo = self.headval.nextval
         stackArr = []
@@ -30,7 +32,7 @@ class Stack:
             stackArr.append(str(nodo.dataval))
             nodo = nodo.nextval
         return stackArr
-
+    '''Funcion para agregar un valor dado hasta arriba del stack'''
     def add(self, dataval):
         node = Node(dataval)
         node.nextval = self.headval.nextval

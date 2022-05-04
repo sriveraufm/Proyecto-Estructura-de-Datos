@@ -309,6 +309,7 @@ def inventarioDescuentos():
 
 @app.route('/registro', methods=['GET'])
 def registroGet():
+    '''Permite ver el registro del uso de apis'''
     return jsonify({'message' : " <- ".join(registro.get())})
 
 flask_profiler.init_app(app)
