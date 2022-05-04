@@ -190,6 +190,6 @@ def demo_bplustree():
     # print(bplustree.retrieve('7971987983618763ggfd'))
 
 if __name__ == '__main__':
-    demo_node()
+    #demo_node()
     print('\n')
     demo_bplustree()
