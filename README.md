@@ -8,8 +8,9 @@
 Para la medición del renidmiento de nuestros APIs utilizamos una librería bastante interactiva llamada flask-profiler
 Puede acceder a la visualización del profiling en http://127.0.0.1:5000/flask-profiler/ 
 
-<img width="1512" alt="Screen Shot 2022-03-14 at 2 44 49 PM" src="https://user-images.githubusercontent.com/97861517/158258785-f52218bd-dbc2-41d3-8bc0-f891249268c1.png">
-<img width="1512" alt="Screen Shot 2022-03-14 at 2 45 16 PM" src="https://user-images.githubusercontent.com/97861517/158258812-4f60028c-7ee1-41f0-b48c-6d35336646e4.png">
+<img width="1510" alt="Screen Shot 2022-05-04 at 7 42 00 AM" src="https://user-images.githubusercontent.com/97861517/166693995-71821c2e-edcf-4898-b07f-f4f1acdf6513.png">
+<img width="1512" alt="Screen Shot 2022-05-04 at 7 42 14 AM" src="https://user-images.githubusercontent.com/97861517/166694014-446cbdfe-ecd1-48b1-ae26-331e95ac62cd.png">
+<img width="1512" alt="Screen Shot 2022-05-04 at 7 42 41 AM" src="https://user-images.githubusercontent.com/97861517/166694025-9c3a3bf8-63dc-4a73-89ee-f4608ce6fea2.png">
 
 ## Funciones del main.py
 Para realizar el profiling de las funciones se utilizó una librería que genera una imagen que nos permite visualizar las llamadas entre funciones
