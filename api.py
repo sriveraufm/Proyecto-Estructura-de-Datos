@@ -309,7 +309,7 @@ def inventarioDescuentos():
 
 @app.route('/registro', methods=['GET'])
 def registroGet():
-    return jsonify({'message' : str(registro)})
+    return jsonify({'message' : " <- ".join(registro.get())})
 
 flask_profiler.init_app(app)
 
