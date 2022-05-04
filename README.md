@@ -21,4 +21,5 @@ Para generar este archivo es necesario instalar GraphViz y pycallgraph y correr 
 Alternativamente se puede utilizar un simple profiler comocido como cProfile dentro del archivo cprofile.py, el cual nos regresa las llamadas de las funciones...
 
 <img width="1025" alt="Screen Shot 2022-05-04 at 1 29 08 PM" src="https://user-images.githubusercontent.com/97861517/166811396-25dfd1d1-9e4f-4d94-b008-097a5efdf466.png">
+![image](https://user-images.githubusercontent.com/97846712/166831990-9b8fb7a8-a22c-4093-a4d8-6daba5959158.png)
 
