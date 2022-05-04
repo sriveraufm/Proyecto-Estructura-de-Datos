@@ -193,6 +193,8 @@ def inventarioAgregrarAPI():
     Tome en cuenta que el API no permite agregar un producto que ya exista'''
     orden = {'PRODUCTO' : request.json['producto'],'PRECIO' : request.json['precio'], 'INVENTARIO': request.json['inventario']}
     producto = mayus(str(list(orden.values())[0]))
+    BPlusTreeV2.bplustree.insert(producto, producto)
+    BPlusTreeV2.bplustree.show()
     precio = float(list(orden.values())[1])
     inv = int(list(orden.values())[2])
     if(inventario.listfind(producto) is not None):

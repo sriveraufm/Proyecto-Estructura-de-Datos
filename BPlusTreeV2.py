@@ -150,44 +150,44 @@ class BPlusTree(object):
         """Prints the keys at each level."""
         self.root.show()
 
-def demo_node():
-    print('Initializing node...')
-    node = Node(order=4)
+# def demo_node():
+#     print('Initializing node...')
+#     node = Node(order=4)
 
-    print('\nInserting key a...')
-    node.add('a', 'alpha')
-    print('Is node full?', node.is_full())
-    node.show()
+#     print('\nInserting key a...')
+#     node.add('a', 'alpha')
+#     print('Is node full?', node.is_full())
+#     node.show()
 
-    print('\nInserting keys b, c, d...')
-    node.add('b', 'bravo')
-    node.add('c', 'charlie')
-    node.add('d', 'delta')
-    print('Is node full?', node.is_full())
-    node.show()
+#     print('\nInserting keys b, c, d...')
+#     node.add('b', 'bravo')
+#     node.add('c', 'charlie')
+#     node.add('d', 'delta')
+#     print('Is node full?', node.is_full())
+#     node.show()
 
-    print('\nSplitting node...')
-    node.split()
-    node.show()
+#     print('\nSplitting node...')
+#     node.split()
+#     node.show()
 
 def demo_bplustree():
     print('Initializing B+ tree...')
     bplustree = BPlusTree(order=4)
 
-    print('\nB+ tree with 1 item...')
-    bplustree.insert('71bd71j5plao9', '71bd71j5plao9')
-    bplustree.show()
+    # print('\nB+ tree with 1 item...')
+    # bplustree.insert('71bd71j5plao9', '71bd71j5plao9')
+    # bplustree.show()
 
-    print('\nB+ tree with 2 items...')
-    bplustree.insert('1870fdjaka991kla9', '1870fdjaka991kla9')
-    bplustree.show()
+    # print('\nB+ tree with 2 items...')
+    # bplustree.insert('1870fdjaka991kla9', '1870fdjaka991kla9')
+    # bplustree.show()
 
-    print('\nB+ tree with 3 items...')
-    bplustree.insert('7971987983618763ggd','7971987983618763ggd')
-    bplustree.show()
+    # print('\nB+ tree with 3 items...')
+    # bplustree.insert('7971987983618763ggd','7971987983618763ggd')
+    # bplustree.show()
 
-    print('\nRetrieving values with key e...')
-    print(bplustree.retrieve('7971987983618763ggfd'))
+    # print('\nRetrieving values with key e...')
+    # print(bplustree.retrieve('7971987983618763ggfd'))
 
 if __name__ == '__main__':
     demo_node()
