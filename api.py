@@ -6,7 +6,7 @@ import shortuuid
 from flask import Flask, render_template, request, flash, redirect, url_for
 #
 import flask_profiler
-import BPlusTreeV2
+
 
 app = Flask(__name__)
 app.config["DEBUG"] = True 
@@ -214,7 +214,7 @@ def inventarioAgregrarAPI():
         else:
             inventario.agregar([producto, precio, inv])
         bplustree.insert(str(producto), str(producto))
-        bplustree.show()
+        # bplustree.show()
         return(jsonify({"message" : "Producto agregado con exito al inventario"}))
 
 @app.route('/inventario/modificar', methods=['PUT'])
