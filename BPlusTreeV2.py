@@ -161,7 +161,7 @@ class BPlusTree(object):
 
 #     print('\nInserting keys b, c, d...')
 #     node.add('b', 'bravo')
-#     node.add('c', 'charlie')
+#     node.add('c', 'charlie'
 #     node.add('d', 'delta')
 #     print('Is node full?', node.is_full())
 #     node.show()
