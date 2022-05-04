@@ -16,8 +16,9 @@ Puede acceder a la visualización del profiling en http://127.0.0.1:5000/flask-p
 Para realizar el profiling de las funciones se utilizó una librería que genera una imagen que nos permite visualizar las llamadas entre funciones
 Para generar este archivo es necesario instalar GraphViz y pycallgraph y correr $ pycallgraph graphviz -- ./main.py
 
-![pycallgraph](https://user-images.githubusercontent.com/97861517/166624004-e96fecc5-d1b3-436b-9ebf-1049bb7a382d.png)
+![pycallgraph](https://user-images.githubusercontent.com/97861517/166811211-55b90407-a95c-4c91-babf-a9bdb6275b8d.png)
 
 Alternativamente se puede utilizar un simple profiler comocido como cProfile dentro del archivo cprofile.py, el cual nos regresa las llamadas de las funciones...
 
-<img width="1062" alt="Screen Shot 2022-05-03 at 10 19 08 PM" src="https://user-images.githubusercontent.com/97861517/166624020-c3bde873-2777-48f7-90c5-b218f9f80dde.png">
+<img width="1025" alt="Screen Shot 2022-05-04 at 1 29 08 PM" src="https://user-images.githubusercontent.com/97861517/166811396-25dfd1d1-9e4f-4d94-b008-097a5efdf466.png">
+
