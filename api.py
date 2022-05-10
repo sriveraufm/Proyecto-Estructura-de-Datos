@@ -25,6 +25,20 @@ app = Flask(__name__)
 
 app.config["DEBUG"] = True 
 
+# Load the Treblle SDK to your Python app
+INSTALLEDD_APPS = [
+    'treblle',
+]
+ 
+# Enable the Treblle SDK middleware
+MIDDLEWARE_CLASSES = [
+    'treblle.middleware.TreblleMiddleware',
+]
+
+TREBLLE_INFO = {
+    'api_key': os.environ.get('ReyFLHEdcrU7iDNmgN0Zr4wllQMGgkqC'),
+    'project_id': os.environ.get('jGpVSR2BBcvYMrbA')
+}
 
 # app.config["flask_profiler"] = {
 #     "enabled": app.config["DEBUG"],
@@ -136,17 +150,17 @@ def agregarOrden():
                 guardar()
                 ordenesQueue.add(idA)
                 registro.add('AGREGAR ORDEN, EXITOSO')
-                return jsonify({'message' : "Orden agregada exitosamente"})
+                return jsonify({'message' : "Orden agregada exitosamente"}),201
             else:
                 registro.add('AGREGAR ORDEN, FALLIDO')
-                return jsonify({'message' : "Límite de órdenes diario alcanzado"})
+                return jsonify({'message' : "Límite de órdenes diario alcanzado"}),406
 
         else:
             registro.add('AGREGAR ORDEN, FALLIDO')
-            return jsonify({'message' : "El producto que desea comprar no cuenta con suficiente existencias, lo sentimos."})
+            return jsonify({'message' : "El producto que desea comprar no cuenta con suficiente existencias, lo sentimos."}),406
     else:
         registro.add('AGREGAR ORDEN, FALLIDO')
-        return jsonify({'message' : "El producto que desea comprar no existe"})
+        return jsonify({'message' : "El producto que desea comprar no existe"}),406
     # ordenes.append([j for j in [orden,"PENDIENTE",0]])
     
 # realizar pago
