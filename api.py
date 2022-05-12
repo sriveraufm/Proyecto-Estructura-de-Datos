@@ -135,7 +135,8 @@ def agregarOrden():
     }
     '''
     idA = shortuuid.ShortUUID().random(length=10)
-    orden = {'NOMBRE' : request.json['nombre'],'CANTIDAD' : request.json['cantidad'],}
+    req = request.get_json(force=True)
+    orden = {'NOMBRE' : req['nombre'],'CANTIDAD' : req['cantidad'],}
     prodA = mayus(str(list(orden.values())[0]))
     totalA = int(list(orden.values())[1])
     productoInventario = inventario.listfind(prodA)
@@ -150,17 +151,17 @@ def agregarOrden():
                 guardar()
                 ordenesQueue.add(idA)
                 registro.add('AGREGAR ORDEN, EXITOSO')
-                return jsonify({'message' : "Orden agregada exitosamente"}),201
+                return jsonify({'message' : "Orden agregada exitosamente"})
             else:
                 registro.add('AGREGAR ORDEN, FALLIDO')
-                return jsonify({'message' : "Límite de órdenes diario alcanzado"}),406
+                return jsonify({'message' : "Límite de órdenes diario alcanzado"})
 
         else:
             registro.add('AGREGAR ORDEN, FALLIDO')
-            return jsonify({'message' : "El producto que desea comprar no cuenta con suficiente existencias, lo sentimos."}),406
+            return jsonify({'message' : "El producto que desea comprar no cuenta con suficiente existencias, lo sentimos."})
     else:
         registro.add('AGREGAR ORDEN, FALLIDO')
-        return jsonify({'message' : "El producto que desea comprar no existe"}),406
+        return jsonify({'message' : "El producto que desea comprar no existe"})
     # ordenes.append([j for j in [orden,"PENDIENTE",0]])
     
 # realizar pago
@@ -175,7 +176,8 @@ def pagar():
     "tarjeta": "1414"
     }
     Notese que el numero de tarjeta debe ser "1414", esto es para simular una respuesta de VISANET y si se manda un numero de tarjeta invalido el API de VISANET no permitiria realizar un pago'''
-    orden = {'ID' : request.json['id'],'TARJETA' : request.json['tarjeta'],}
+    req = request.get_json(force=True)
+    orden = {'ID' : req['id'],'TARJETA' : req['tarjeta'],}
     idR = str(list(orden.values())[0])
     tarjeta = str(list(orden.values())[1])
     if(tarjeta != '1414'):# SIMULACION DE RESPUESTA DE VISANET
@@ -203,7 +205,8 @@ def anular():
     {
     "id":"DhjVjQwyJs"
     }'''
-    orden = {'ID' : request.json['id']}
+    req = request.get_json(force=True)
+    orden = {'ID' : req['id']}
     idR = str(list(orden.values())[0])
     g = 0
     for k in range(0,len(ordenes)):
@@ -229,7 +232,8 @@ def inventarioimprimirAPI():
 @app.route('/inventario/buscar', methods=['GET'])
 def inventarioBuscarAPI():
         '''permite buscar en el arbol si existe el producto dado'''
-        orden = {'PRODUCTO' : request.json['producto']}
+        req = request.get_json(force=True)
+        orden = {'PRODUCTO' : req['producto']}
         producto = mayus(str(list(orden.values())[0]))
         if(bplustree.retrieve(producto) is not None):
             registro.add('BUSCAR PRODUCTO, EXITOSO')
@@ -250,7 +254,8 @@ def inventarioAgregrarAPI():
     "inventario": 220
     },
     Tome en cuenta que el API no permite agregar un producto que ya exista'''
-    orden = {'PRODUCTO' : request.json['producto'],'PRECIO' : request.json['precio'], 'INVENTARIO': request.json['inventario']}
+    req = request.get_json(force=True)
+    orden = {'PRODUCTO' : req['producto'],'PRECIO' : req['precio'], 'INVENTARIO': req['inventario']}
     producto = mayus(str(list(orden.values())[0]))
 
     precio = float(list(orden.values())[1])
@@ -267,7 +272,7 @@ def inventarioAgregrarAPI():
         bplustree.insert(str(producto), str(producto))
         # bplustree.show()
         registro.add('AGREGAR INVENTARIO, EXITOSO')
-        return(jsonify({"message" : "Producto agregado con exito al inventario"}))
+    return(jsonify({"message" : "Producto agregado con exito al inventario"}))
 
 @app.route('/inventario/modificar', methods=['PUT'])
 def inventarioModificar():
@@ -279,7 +284,8 @@ def inventarioModificar():
     "producto" : "leche",
     "inventario": 100
     }'''
-    orden = {'PRODUCTO' : request.json['producto'],'INVENTARIO' : request.json['inventario']}
+    req = request.get_json(force=True)
+    orden = {'PRODUCTO' : req['producto'],'INVENTARIO' : req['inventario']}
     prodA = mayus(str(list(orden.values())[0]))
     inv = int(list(orden.values())[1])
     if(inv < 0):
@@ -305,7 +311,8 @@ def inventarioDescuentos():
     "producto" : "leche",
     "descuento": 40
     }'''
-    orden = {'PRODUCTO' : request.json['producto'],'DESCUENTO' : request.json['descuento']}
+    req = request.get_json(force=True)
+    orden = {'PRODUCTO' : req['producto'],'DESCUENTO' : req['descuento']}
     prodA = mayus(str(list(orden.values())[0]))
     descuento = float(list(orden.values())[1])
     if(descuento > 100):
