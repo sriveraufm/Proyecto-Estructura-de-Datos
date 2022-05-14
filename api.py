@@ -10,16 +10,6 @@ import sqlite3
 import threading
 
 
-# Define the lock globally
-lock = threading.Lock()
-
-def Func(host,cursor,db):
-    try:
-        lock.acquire(True)
-        res = cursor.execute('''...''',(host,))
-        # do something
-    finally:
-        lock.release()
 
 app = Flask(__name__)
 
