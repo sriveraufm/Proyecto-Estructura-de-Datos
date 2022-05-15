@@ -39,20 +39,20 @@ TREBLLE_INFO = {
 # 	"^/static/.*"
 # 	]
 # }
-app.config["flask_profiler"] = {
-    "enabled": app.config["DEBUG"],
-    "storage": {
-        "engine": "sqlite"
-    },
-    "basicAuth":{
-        "enabled": True,
-        "username": "admin",
-        "password": "admin"
-    },
-    "ignore": [
-	    "^/static/.*"
-	]
-}
+# app.config["flask_profiler"] = {
+#     "enabled": app.config["DEBUG"],
+#     "storage": {
+#         "engine": "sqlite"
+#     },
+#     "basicAuth":{
+#         "enabled": True,
+#         "username": "admin",
+#         "password": "admin"
+#     },
+#     "ignore": [
+# 	    "^/static/.*"
+# 	]
+# }
 
 #  "basicAuth":{
     #     "enabled": True,
@@ -124,7 +124,7 @@ def agregarOrden():
     "cantidad": 15
     }
     '''
-    idA = shortuuid.ShortUUID().random(length=10)
+    idA = uuid
     req = request.get_json(force=True)
     orden = {'NOMBRE' : req['nombre'],'CANTIDAD' : req['cantidad'],}
     prodA = mayus(str(list(orden.values())[0]))
@@ -134,11 +134,13 @@ def agregarOrden():
         if(int(productoInventario[2])>=totalA):
             if not ordenesQueue.full():
                 total = totalA * float(productoInventario[1])
-                ordenes.append([j for j in [idA,prodA,totalA,"PENDIENTE",total]])
+                # ordenes.append([j for j in [idA,prodA,totalA,"PENDIENTE",total]])
+                ordenes.set_val(idA, {'PRODUCTO': prodA,'CANTIDAD' : totalA, 'ESTADO': 'PENDIENTE','TOTAL': total})
                 # valorPrueba=int(productoInventario[2]) - totalA
                 # #print(valorPrueba)
+                print(ordenes)
                 inventario.listmodify(prodA,(int(productoInventario[2]) - totalA), 'Inventario')
-                guardar()
+                # guardar()
                 ordenesQueue.add(idA)
                 registro.add('AGREGAR ORDEN, EXITOSO')
                 return jsonify({'message' : "Orden agregada exitosamente"})
@@ -221,11 +223,11 @@ def inventarioimprimirAPI():
 
 @app.route('/inventario/buscar', methods=['GET'])
 def inventarioBuscarAPI():
-        '''permite buscar en el arbol si existe el producto dado'''
+        '''permite buscar si existe el producto dado'''
         req = request.get_json(force=True)
         orden = {'PRODUCTO' : req['producto']}
         producto = mayus(str(list(orden.values())[0]))
-        if(bplustree.retrieve(producto) is not None):
+        if(producto in set(inventarioJson()['PRODUCTO'])):
             registro.add('BUSCAR PRODUCTO, EXITOSO')
             return(jsonify({"message" : "Este producto si existe en el inventario"}))
         else:
@@ -251,7 +253,7 @@ def inventarioAgregrarAPI():
     precio = float(list(orden.values())[1])
     inv = int(list(orden.values())[2])
     # if(inventario.listfind(producto) is not None):
-    if(bplustree.retrieve(producto) is not None):
+    if(producto in set(inventarioJson()['PRODUCTO'])):
         registro.add('AGREGAR INVENTARIO, FALLIDO')
         return(jsonify({"message" : "Este producto ya existe en el inventario, por favor verifique"}))
     else:
@@ -259,8 +261,6 @@ def inventarioAgregrarAPI():
             inventario.agregar([producto, precio, inv])
         else:
             inventario.agregar([producto, precio, inv])
-        bplustree.insert(str(producto), str(producto))
-        # bplustree.show()
         registro.add('AGREGAR INVENTARIO, EXITOSO')
     return(jsonify({"message" : "Producto agregado con exito al inventario"}))
 
@@ -324,7 +324,7 @@ def registroGet():
     '''Permite ver el registro del uso de apis'''
     return jsonify({'message' : " <- ".join(registro.get())})
 
-flask_profiler.init_app(app)
+# flask_profiler.init_app(app)
 
 @app.route("/docs")
 def docs():
