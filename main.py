@@ -5,14 +5,8 @@ import uuid
 import os.path
 import json
 import cProfile
-from BPlusTreeV2 import *
-
 from flask import jsonify
-
-# ordenes csv
-
-bplustree = BPlusTree(order=4)
-
+from hashtable import HashTable
 
 class Node:
   '''Clase de nodo para el stack'''
@@ -40,8 +34,6 @@ class Stack:
 
 
 registro = Stack()
-
-
 
 class Queue:
     '''Define nuestro queue'''
@@ -72,25 +64,26 @@ class Queue:
     def empty(self):
         return len(self.queue) == 0
 
-
+ordenes = HashTable(size = 50)
 ordenesQueue = Queue(maxsize=6)
 
 col = 5
 row = 0
-ordenes = [[0] * col for i in range(row)]
-if os.path.isfile('ordenes.csv'):
-  with open('ordenes.csv') as csv_file:
-      csv_reader = csv.reader(csv_file, delimiter=',')
-      line_count = 0
-      for rows in csv_reader:
-            if(any(rows)):
-              ordenes.append([j for j in rows])
-else:
-    ordenes.append([j for j in ['ID',"NOMBRE","CANTIDAD","ESTADO","TOTAL"]])
-    with open("ordenes.csv", "w") as f:
-      writer = csv.writer(f)
-      writer.writerows(ordenes)
-      
+# ordenes = [[0] * col for i in range(row)]
+# if os.path.isfile('ordenes.csv'):
+#   with open('ordenes.csv') as csv_file:
+#       csv_reader = csv.reader(csv_file, delimiter=',')
+#       line_count = 0
+#       for rows in csv_reader:
+#             if(any(rows)):
+#               ordenes.append([j for j in rows])
+# else:
+#     ordenes.append([j for j in ['ID',"NOMBRE","CANTIDAD","ESTADO","TOTAL"]])
+#     with open("ordenes.csv", "w") as f:
+#       writer = csv.writer(f)
+#       writer.writerows(ordenes)
+
+
 class Node:
   '''Define el Nodo que utilizaremos en la linked list del inventario'''
   def __init__(self, dataval=None):
@@ -102,9 +95,10 @@ class Node:
 
 class SLinkedList:
   '''Define la linked list que utilizaremos para manejar nuestro inventario'''
-  def __init__(self):
+  def __init__(self, save):
     self.headval = None
-  def agregar(self, newdata,save = None):
+    self.save = save
+  def agregar(self, newdata,save = True):
       '''Agrega un nuevo valor al nodo'''
       nodoNuevo = Node(newdata)
       if self.headval is None:
@@ -114,7 +108,7 @@ class SLinkedList:
       while(nodo.nextval is not None):
         nodo = nodo.nextval
       nodo.nextval=nodoNuevo
-      if save is None:
+      if self.save is True:
         self.exportarcsv()#guarda cambios a csv
 
   def borrar(self, nrow):
@@ -197,7 +191,7 @@ class SLinkedList:
         writer = csv.writer(f)
         writer.writerows([nodo.dataval])
         nodo = nodo.nextval
-          
+
 
 def mayus(palabra):
   ''' convierte a mayuscula la palabra o  string dada'''
@@ -205,26 +199,19 @@ def mayus(palabra):
   return nvp
 
 
-def eliminar(nbr):
-    '''Elimina la orden dado el id'''
-    si = 0
-    for i in range(0,len(ordenes)):
-        if(i > 0):
-          if str(ordenes[i][0])== nbr:
-              si = 1
-              arr2 = ordenes[0:i][0:col] + ordenes[i + 1:len(ordenes)][0:col]#
-    if(si == 0):
-      arr2 = ordenes  
-    return(arr2)
-
 def guardar():
-  '''Guarda el array multidimensional de ordenes en un archivo csv para conservar los cambios'''
-  with open("ordenes.csv", "w") as f:
-    writer = csv.writer(f)
-    writer.writerows(ordenes)
+  '''Guarda las ordenes en un archivo csv para conservar los cambios'''
+  
+  with open('ordenes.csv', 'w') as csvfile:
+    writer = csv.DictWriter(csvfile, fieldnames=['ID','NOMBRE','CANTIDAD','ESTADO','TOTAL'])
+    writer.writeheader()
+    for key in ordenes.keys:
+        item = ordenes.get_val(key)
+        item.update({'ID': key})
+        writer.writerow(item)
 
 
-inventario = SLinkedList()
+inventario = SLinkedList(save = True)
 # # inventario csv
 if os.path.isfile('inventario.csv'):
   with open('inventario.csv') as csv_file:
@@ -234,7 +221,6 @@ if os.path.isfile('inventario.csv'):
           if(any(rows)):
             # print([j for j in rows])
             inventario.agregar([j for j in rows],0)
-            bplustree.insert(str(rows[0]), str(rows[0]))
   # inventario.headval.nextval = None
 else:
   inventario.headval = Node(["Producto","Precio","Inventario"])# columnas
@@ -245,10 +231,10 @@ else:
       writer.writerows([nodo.dataval])
 
 
-def printOrdenes():
-    '''Imprime el array multidimensional de ordenes'''
-    for r in ordenes:
-      print( ' '.join([str(x) for x in r] ) ) 
+# def printOrdenes():
+#     '''Imprime el array multidimensional de ordenes'''
+#     for r in ordenes:
+#       print( ' '.join([str(x) for x in r] ) ) 
       
 
 
