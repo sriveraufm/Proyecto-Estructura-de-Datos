@@ -69,43 +69,27 @@ class HashTable:
 
     # Remove a value with specific key
     def delete_val(self, key):
+
     # Get the index from the key using
     # hash function
         hashed_key = hash(key) % self.size
+
     # Get the bucket corresponding to index
         bucket = self.hash_table[hashed_key]
+
         found_key = False
         for index, record in enumerate(bucket):
             record_key, record_val = record
             # check if the bucket has same key as
             # the key to be deleted
-            print(record_key)
-            print(key)
-            print(str(record_key) == str(key))
-            if str(record_key) == str(key):
+            if record_key == key:
                 found_key = True
                 break
-        if found_key is True:
-            print(index)
-            bucket.pop(index)
-        return (found_key)
-            
+            if found_key:
+                bucket.pop(index)
+            return (found_key)
     # To print the items of hash map
     def __str__(self):
         return "".join(str(item) for item in self.hash_table)
 
 
-hash_table = HashTable(50)
-  
-# insert some values
-
-hash_table.set_val('portal@example.com', 'some other value')
-print(hash_table)
-print()
-
-print('aqui')
-# delete or remove a value
-print(hash_table.delete_val('portal@example.com'))
-
-print('desps')
-print(hash_table)

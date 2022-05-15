@@ -10,7 +10,6 @@ import sqlite3
 import threading
 
 
-
 app = Flask(__name__)
 
 app.config["DEBUG"] = True 
@@ -60,24 +59,27 @@ TREBLLE_INFO = {
     #     "password": "admin"
     # },
 
+
 def ordenesJson():
     '''Convierte el array multidimensional de ordenes a un diccionario o nested struct que nos permite enviarlo como JSON'''
     #printOrdenes()
     ordenesDict = {"ID":[],"NOMBRE":[],"CANTIDAD":[], "ESTADO":[], "TOTAL":[]};
     #print('len(ordenes) ',len(ordenes))
-    for j in range(1, len(ordenes)):
-        for i in range(0,5):
-            #print(ordenes[j][i])
-            ordenesDict[list(ordenesDict)[i]].append(ordenes[j][i])
+    for key in ordenes.keys:
+        item = list(ordenes.get_val(key))
+        ordenesDict[list(ordenesDict)[0]].append(key)
+        for i in range(0,4):
+            ordenesDict[list(ordenesDict)[i+1]].append(item[i])    
     return(ordenesDict)
 
 def inventarioJson():
     '''Convierte el linked list de inventario a un diccionario o nested struct que nos permite enviarlo como JSON'''
     invDict = {"PRODUCTO":[],"PRECIO":[],"INVENTARIO":[]};
-    nodo = inventario.headval.nextval
+    nodo = inventario.headval
     while nodo is not None:
-        for i in range(0, len(nodo.dataval)):
-            invDict[list(invDict)[i]].append(nodo.dataval[i])
+        data = nodo.dataval
+        for i in range(0, len(data)):
+            invDict[list(invDict)[i]].append(data[i])
         nodo = nodo.nextval
     return(invDict)
     
@@ -124,7 +126,7 @@ def agregarOrden():
     "cantidad": 15
     }
     '''
-    idA = uuid
+    idA = str(uuid.uuid4())
     req = request.get_json(force=True)
     orden = {'NOMBRE' : req['nombre'],'CANTIDAD' : req['cantidad'],}
     prodA = mayus(str(list(orden.values())[0]))
@@ -134,14 +136,11 @@ def agregarOrden():
         if(int(productoInventario[2])>=totalA):
             if not ordenesQueue.full():
                 total = totalA * float(productoInventario[1])
-                # ordenes.append([j for j in [idA,prodA,totalA,"PENDIENTE",total]])
-                ordenes.set_val(idA, {'PRODUCTO': prodA,'CANTIDAD' : totalA, 'ESTADO': 'PENDIENTE','TOTAL': total})
-                # valorPrueba=int(productoInventario[2]) - totalA
-                # #print(valorPrueba)
+                ordenes.set_val(idA, [prodA, totalA, 'PENDIENTE', total])
                 print(ordenes)
                 inventario.listmodify(prodA,(int(productoInventario[2]) - totalA), 'Inventario')
-                # guardar()
                 ordenesQueue.add(idA)
+                
                 registro.add('AGREGAR ORDEN, EXITOSO')
                 return jsonify({'message' : "Orden agregada exitosamente"})
             else:
@@ -155,7 +154,7 @@ def agregarOrden():
         registro.add('AGREGAR ORDEN, FALLIDO')
         return jsonify({'message' : "El producto que desea comprar no existe"})
     # ordenes.append([j for j in [orden,"PENDIENTE",0]])
-    
+    #    
 # realizar pago
 @app.route('/ordenes/pagar', methods=['PUT'])
 def pagar():
@@ -176,14 +175,13 @@ def pagar():
         registro.add('PAGAR ORDEN, FALLIDO')
         return(jsonify({'message' : "El metodo de pago no ha sido aceptado."}))
     g = 0
-    for k in range(0,len(ordenes)):
-        if ordenes[k][0]== idR:
-            ordenes[k][3]="PAGADA"
-            g = 1
-            guardar()
-            registro.add('PAGAR ORDEN, EXITOSO')
-            return(jsonify({"message" :"Orden pagada con exito"}))
-    if g==0:
+    values = list(ordenes.get_val(idR))
+    if values is not None:
+        values[2] = 'PAGADA'
+        ordenes.set_val(idR, values)
+        registro.add('PAGAR ORDEN, EXITOSO')
+        return(jsonify({"message" :"Orden pagada con exito"}))
+    else:
         registro.add('PAGAR ORDEN, FALLIDO')
         return(jsonify({"message" : "La orden no ha sido encontrada"}))
 
@@ -200,15 +198,11 @@ def anular():
     req = request.get_json(force=True)
     orden = {'ID' : req['id']}
     idR = str(list(orden.values())[0])
-    g = 0
-    for k in range(0,len(ordenes)):
-        if ordenes[k][0]== idR:
-            ordenes[k][3]="ANULADA"
-            g = 1
-            guardar()
-            registro.add('ANULAR ORDEN, EXITOSO')
-            return(jsonify({"message" :"Orden anulada con exito"}))
-    if g==0:
+    if ordenes.delete_val(idR):
+        registro.add('ANULAR ORDEN, EXITOSO')
+        ordenesQueue.anular(idR)
+        return(jsonify({"message" :"Orden eliminada con exito"}))
+    else:
         registro.add('ANULAR ORDEN, FALLIDO')
         return(jsonify({"message" : "La orden no ha sido encontrada"}))
 
@@ -218,6 +212,7 @@ def inventarioimprimirAPI():
     GET http://127.0.0.1:5000/inventario
     Metodo GET que regresa el JSON conteniendo todos los nodos del inventario'''
     registro.add('VER INVENTARIO, EXITOSO')
+    print(inventarioJson())
     return jsonify(inventarioJson())
 
 
@@ -257,10 +252,7 @@ def inventarioAgregrarAPI():
         registro.add('AGREGAR INVENTARIO, FALLIDO')
         return(jsonify({"message" : "Este producto ya existe en el inventario, por favor verifique"}))
     else:
-        if(inventario.headval.nextval is None):
-            inventario.agregar([producto, precio, inv])
-        else:
-            inventario.agregar([producto, precio, inv])
+        inventario.agregar([producto, precio, inv])
         registro.add('AGREGAR INVENTARIO, EXITOSO')
     return(jsonify({"message" : "Producto agregado con exito al inventario"}))
 
@@ -284,12 +276,35 @@ def inventarioModificar():
     productoInventario = inventario.listfind(prodA)
     if(productoInventario is not None):
         inventario.listmodify(prodA,inv, 'Inventario')
-        guardar()
+        # guardar()
         registro.add('MODIFICAR INVENTARIO, EXITOSO')
         return jsonify({'message' : "Nuevo inventario modificado exitosamente"})
     else:
         registro.add('MODIFICAR INVENTARIO, FALLIDO')
         return jsonify({'message' : "El producto que desea modificar no existe"})
+
+@app.route('/inventario/borrar', methods=['PUT'])
+def inventarioBorrar():
+    '''API que permite borrar el  producto dado,
+    Metodo PUT que solicita un "producto" e "inventario"
+    Ejemplo:
+    PUT http://127.0.0.1:5000/inventario/borrar
+    {
+    "producto" : "leche"
+    
+    }'''
+    req = request.get_json(force=True)
+    orden = {'PRODUCTO' : req['producto']}
+    prodA = mayus(str(list(orden.values())[0]))
+    productoInventario = inventario.listfind(prodA)
+    if(productoInventario is not None):
+        inventario.listmodify(prodA,None,'Borrar')
+        # guardar()
+        registro.add('BORRAR INVENTARIO, EXITOSO')
+        return jsonify({'message' : "Inventario eliminado exitosamente"})
+    else:
+        registro.add('BORRAR INVENTARIO, FALLIDO')
+        return jsonify({'message' : "El producto que desea eliminar no existe"})
 
 @app.route('/inventario/descuento', methods=['PUT'])
 def inventarioDescuentos():
@@ -311,7 +326,6 @@ def inventarioDescuentos():
     productoInventario = inventario.listfind(prodA)
     if(productoInventario is not None):
         inventario.listmodify(prodA,float(productoInventario[1]) - (float(productoInventario[1]) * float(descuento)/100), 'Precio')
-        guardar()
         registro.add('APLICAR DESCUENTO, EXITOSO')
         return jsonify({'message' : "Descuento aplicado exitosamente"})
     else:
