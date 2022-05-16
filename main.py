@@ -303,7 +303,7 @@ def guardar():
     for key in ordenes.keys:
         item = ordenes.get_val(key)
         item.update({'ID': key})
-        writer.writerow(item
+        writer.writerow(item)
 
 
 inventario = SLinkedList(save = True)
