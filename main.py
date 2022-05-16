@@ -43,7 +43,7 @@ class Stack:
     def add(self, dataval):
         node = Node(dataval)
         node.nextval = self.headval
-        self.headval = node
+        self.headval = nod
 
 
 registro = Stack()
