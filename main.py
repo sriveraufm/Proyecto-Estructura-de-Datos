@@ -84,7 +84,7 @@ class Queue:
         else:
             return None
 
-ordenesQueue = Queue(maxsize=6
+ordenesQueue = Queue(maxsize=6)
 
 class HashTable:
     
