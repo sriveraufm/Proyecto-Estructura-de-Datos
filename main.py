@@ -18,7 +18,7 @@ conn = pyodbc.connect(
                     'PWD=ec2wfr9qzh;'
                     'Trusted_Connection=no;'
                     )
-conn.autocommit = True
+conn.autocommit = Tru
 cursor = conn.cursor()
 
 class Node:
