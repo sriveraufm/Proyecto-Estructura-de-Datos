@@ -180,7 +180,7 @@ class HashTable:
         if found_key is True:
             cursor.execute("DELETE FROM Ordenes WHERE ID = '%s'" % (key))
             bucket.pop(index)
-        return (found_key
+        return (found_key)
             
     # To print the items of hash map
     def __str__(self):
