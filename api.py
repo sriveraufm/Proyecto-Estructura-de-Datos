@@ -10,7 +10,7 @@ import sqlite3
 import threading
 
 
-app = Flask(__name__
+app = Flask(__name__)
 
 app.config["DEBUG"] = True 
 
