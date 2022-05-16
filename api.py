@@ -59,7 +59,6 @@ TREBLLE_INFO = {
     #     "password": "admin"
     # },
 
-
 def ordenesJson():
     '''Convierte el array multidimensional de ordenes a un diccionario o nested struct que nos permite enviarlo como JSON'''
     #printOrdenes()
