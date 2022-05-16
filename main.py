@@ -19,7 +19,7 @@ conn = pyodbc.connect(
                     'Trusted_Connection=no;'
                     )
 conn.autocommit = True
-cursor = conn.cursor(
+cursor = conn.cursor()
 
 class Node:
   '''Clase de nodo para el stack'''
