@@ -10,7 +10,7 @@ import pyodbc
 
 
 
-conn = pyodbc.connect
+conn = pyodbc.connect(
                     'Driver={SQL Server};'
                     'Server=estructurasufm.mssql.somee.com;'
                     'Database=estructurasufm;'
