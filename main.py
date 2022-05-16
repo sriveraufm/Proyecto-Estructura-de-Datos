@@ -128,7 +128,7 @@ class HashTable:
         else:
             self.keys.append(key)
             bucket.append((key, val))
-            if sqlthis:
+            if sqlthis: #para no insertar lo del query al inicializar el app
               cursor.execute("INSERT INTO Ordenes (ID, NOMBRE, CANTIDAD, ESTADO, TOTAL) VALUES (?, ?, ?, ?, ?)", str(key), str(val[0]), str(val[1]), str(val[2]), str(val[3]))
 
 
@@ -206,7 +206,7 @@ class SLinkedList:
         nodoNuevo.nextval = self.headval
         self.headval = nodoNuevo
         if self.save is True:
-              if sqlthis is True:
+              if sqlthis is True:#para no insertar lo del query al inicializar el app
                 cursor.execute("INSERT INTO Inventario (Producto, Precio, Inventario) VALUES (?, ?, ?)", nodoNuevo.dataval[0], nodoNuevo.dataval[1], nodoNuevo.dataval[2])
 
   def borrar(self, nrow):
