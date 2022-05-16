@@ -48,7 +48,7 @@ class Stack:
 
 registro = Stack()
 
-class Queue:
+class Queue
     '''Define nuestro queue'''
     '''inicializacion'''
     def __init__(self, maxsize):
