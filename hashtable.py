@@ -1,4 +1,3 @@
-
 class HashTable:
     
 	# Create empty bucket list of given size
@@ -21,7 +20,8 @@ class HashTable:
         bucket = self.hash_table[hashed_key]
 
         found_key = False
-        for index, record in enumerate(bucket):
+        for index in range(len(bucket)):
+            record = bucket[index]
             record_key, record_val = record
 			
 			# check if the bucket has same key as
@@ -35,10 +35,10 @@ class HashTable:
         # Otherwise append the new key-value pair to the bucket
         if found_key:
             bucket[index] = (key, val)
+            # cursor.execute("UPDATE Ordenes SET ESTADO = '%s' WHERE ID = '%s'" % ("PAGADA",key))
         else:
             self.keys.append(key)
             bucket.append((key, val))
-
     # Return searched value with specific key
     def get_val(self, key):
 
@@ -50,7 +50,8 @@ class HashTable:
         bucket = self.hash_table[hashed_key]
 
         found_key = False
-        for index, record in enumerate(bucket):
+        for index in range(len(bucket)):
+            record = bucket[index]
             record_key, record_val = record
 
             # check if the bucket has same key as
@@ -75,37 +76,19 @@ class HashTable:
     # Get the bucket corresponding to index
         bucket = self.hash_table[hashed_key]
         found_key = False
-        for index, record in enumerate(bucket):
+        for index in range(len(bucket)):
+            record = bucket[index]
             record_key, record_val = record
             # check if the bucket has same key as
             # the key to be deleted
-            print(record_key)
-            print(key)
-            print(str(record_key) == str(key))
             if str(record_key) == str(key):
                 found_key = True
                 break
         if found_key is True:
-            print(index)
+            # cursor.execute("DELETE FROM Ordenes WHERE ID = '%s'" % (key))
             bucket.pop(index)
         return (found_key)
             
     # To print the items of hash map
     def __str__(self):
         return "".join(str(item) for item in self.hash_table)
-
-
-hash_table = HashTable(50)
-  
-# insert some values
-
-hash_table.set_val('portal@example.com', 'some other value')
-print(hash_table)
-print()
-
-print('aqui')
-# delete or remove a value
-print(hash_table.delete_val('portal@example.com'))
-
-print('desps')
-print(hash_table)
