@@ -87,17 +87,17 @@ ordenesQueue = Queue(maxsize=6)
 class HashTable:
     
 	# Create empty bucket list of given size
-    def __init__(self, size, save):
+    def __init__(self, size):#, save
         self.size = size
         self.hash_table = self.create_buckets()
         self.keys = []
-        self.save = save
+        # self.save = save
 
     def create_buckets(self):
         return [[] for _ in range(self.size)]
 
 	# Insert values into hash map
-    def set_val(self, key, val, sqlthis = True):
+    def set_val(self, key, val):#, sqlthis = True
 		
 		# Get the index from the key
 		# using hash function
@@ -194,11 +194,11 @@ class Node:
 
 class SLinkedList:
   '''Define la linked list que utilizaremos para manejar nuestro inventario'''
-  def __init__(self, save):
+  def __init__(self):#, save
     self.headval = None
-    self.save = save
+    # self.save = save
 
-  def agregar(self, newdata, sqlthis = True):
+  def agregar(self, newdata):#, sqlthis = True
       '''Agrega un nuevo valor al nodo'''
       nodoNuevo = Node(newdata)
       if nodoNuevo is not None:
@@ -279,7 +279,7 @@ class SLinkedList:
           elif(columna == 'Precio'):
             newArr =[str(producto),float(newval),int(nodo.dataval[2])]
             # cursor.execute("UPDATE Inventario SET Precio = %f WHERE Producto = '%s'" % (newArr[1],newArr[0] ))
-          self.agregar(newArr, sqlthis= False) 
+          self.agregar(newArr) #, sqlthis= False
           break
         nodo = nodo.nextval
     return(productoList)
@@ -305,7 +305,7 @@ def guardar():
         writer.writerow(item)
 
 
-inventario = SLinkedList(save = True)
+inventario = SLinkedList()#save = True
 
 # inventarioDB = list(cursor.execute('SELECT TRIM(Producto), Precio, Inventario FROM Inventario'))
 
@@ -313,7 +313,7 @@ inventario = SLinkedList(save = True)
 #       inventario.agregar(row, sqlthis= False)
 
 
-ordenes = HashTable(size = 50, save = True)
+ordenes = HashTable(size = 50)#, save = True
 # ordenesDB = list(cursor.execute('SELECT TRIM(ID), TRIM(NOMBRE),CANTIDAD, TRIM(ESTADO), TOTAL FROM Ordenes'))
 
 # from itertools import chain
