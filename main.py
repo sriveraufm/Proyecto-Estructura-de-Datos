@@ -6,20 +6,18 @@ import os.path
 import json
 import cProfile
 from flask import jsonify
-import pyodbc 
+# import pyodbc 
 
-
-
-conn = pyodbc.connect(
-                    'Driver={SQL Server};'
-                    'Server=estructurasufm.mssql.somee.com;'
-                    'Database=estructurasufm;'
-                    'UID=srivera_SQLLogin_1;'
-                    'PWD=ec2wfr9qzh;'
-                    'Trusted_Connection=no;'
-                    )
-conn.autocommit = True
-cursor = conn.cursor()
+# conn = pyodbc.connect(
+#                     'Driver={SQL Server};'
+#                     'Server=estructurasufm.mssql.somee.com;'
+#                     'Database=estructurasufm;'
+#                     'UID=srivera_SQLLogin_1;'
+#                     'PWD=ec2wfr9qzh;'
+#                     'Trusted_Connection=no;'
+#                     )
+# conn.autocommit = True
+# cursor = conn.cursor()
 
 class Node:
   '''Clase de nodo para el stack'''
@@ -124,12 +122,13 @@ class HashTable:
         # Otherwise append the new key-value pair to the bucket
         if found_key:
             bucket[index] = (key, val)
-            cursor.execute("UPDATE Ordenes SET ESTADO = '%s' WHERE ID = '%s'" % ("PAGADA",key))
+            # cursor.execute("UPDATE Ordenes SET ESTADO = '%s' WHERE ID = '%s'" % ("PAGADA",key))
         else:
             self.keys.append(key)
             bucket.append((key, val))
-            if sqlthis: #para no insertar lo del query al inicializar el app
-              cursor.execute("INSERT INTO Ordenes (ID, NOMBRE, CANTIDAD, ESTADO, TOTAL) VALUES (?, ?, ?, ?, ?)", str(key), str(val[0]), str(val[1]), str(val[2]), str(val[3]))
+            # if self.save:
+            #   if sqlthis: #para no insertar lo del query al inicializar el app
+            #     cursor.execute("INSERT INTO Ordenes (ID, NOMBRE, CANTIDAD, ESTADO, TOTAL) VALUES (?, ?, ?, ?, ?)", str(key), str(val[0]), str(val[1]), str(val[2]), str(val[3]))
 
 
     # Return searched value with specific key
@@ -178,7 +177,7 @@ class HashTable:
                 found_key = True
                 break
         if found_key is True:
-            cursor.execute("DELETE FROM Ordenes WHERE ID = '%s'" % (key))
+            # cursor.execute("DELETE FROM Ordenes WHERE ID = '%s'" % (key))
             bucket.pop(index)
         return (found_key)
             
@@ -205,9 +204,9 @@ class SLinkedList:
       if nodoNuevo is not None:
         nodoNuevo.nextval = self.headval
         self.headval = nodoNuevo
-        if self.save is True:
-              if sqlthis is True:#para no insertar lo del query al inicializar el app
-                cursor.execute("INSERT INTO Inventario (Producto, Precio, Inventario) VALUES (?, ?, ?)", nodoNuevo.dataval[0], nodoNuevo.dataval[1], nodoNuevo.dataval[2])
+        # if self.save is True:
+        #       if sqlthis is True:#para no insertar lo del query al inicializar el app
+        #         cursor.execute("INSERT INTO Inventario (Producto, Precio, Inventario) VALUES (?, ?, ?)", nodoNuevo.dataval[0], nodoNuevo.dataval[1], nodoNuevo.dataval[2])
 
   def borrar(self, nrow):
     '''Elimina el nodo de la linked list en la posicion dada'''
@@ -271,17 +270,17 @@ class SLinkedList:
       for i in range(int(nrow)): 
         if(nodo.dataval[0] == producto):
           self.borrar(i)
-          if(columna == 'Borrar'):
-            cursor.execute("DELETE FROM Inventario WHERE Producto = '%s'" % (producto))
-          else:
-            if(columna == 'Inventario'):
-              newArr =[str(producto),float(nodo.dataval[1]),int(newval)]
-              cursor.execute("UPDATE Inventario SET Inventario = %s WHERE Producto = '%s'" % (newArr[2],newArr[0] ))
-            elif(columna == 'Precio'):
-              newArr =[str(producto),float(newval),int(nodo.dataval[2])]
-              cursor.execute("UPDATE Inventario SET Precio = %f WHERE Producto = '%s'" % (newArr[1],newArr[0] ))
-            self.agregar(newArr, sqlthis= False) 
-            break
+          # if(columna == 'Borrar'):
+          #   cursor.execute("DELETE FROM Inventario WHERE Producto = '%s'" % (producto))
+          # else:
+          if(columna == 'Inventario'):
+            newArr =[str(producto),float(nodo.dataval[1]),int(newval)]
+            # cursor.execute("UPDATE Inventario SET Inventario = %s WHERE Producto = '%s'" % (newArr[2],newArr[0] ))
+          elif(columna == 'Precio'):
+            newArr =[str(producto),float(newval),int(nodo.dataval[2])]
+            # cursor.execute("UPDATE Inventario SET Precio = %f WHERE Producto = '%s'" % (newArr[1],newArr[0] ))
+          self.agregar(newArr, sqlthis= False) 
+          break
         nodo = nodo.nextval
     return(productoList)
     
@@ -308,15 +307,15 @@ def guardar():
 
 inventario = SLinkedList(save = True)
 
-inventarioDB = list(cursor.execute('SELECT TRIM(Producto), Precio, Inventario FROM Inventario'))
+# inventarioDB = list(cursor.execute('SELECT TRIM(Producto), Precio, Inventario FROM Inventario'))
 
-for row in inventarioDB:## no se de que otra forma hacerlo, esta no es la mejor forma!
-      inventario.agregar(row, sqlthis= False)
-inventario.listprint()
+# for row in inventarioDB:## no se de que otra forma hacerlo, esta no es la mejor forma!
+#       inventario.agregar(row, sqlthis= False)
+
 
 ordenes = HashTable(size = 50, save = True)
-ordenesDB = list(cursor.execute('SELECT TRIM(ID), TRIM(NOMBRE),CANTIDAD, TRIM(ESTADO), TOTAL FROM Ordenes'))
+# ordenesDB = list(cursor.execute('SELECT TRIM(ID), TRIM(NOMBRE),CANTIDAD, TRIM(ESTADO), TOTAL FROM Ordenes'))
 
-from itertools import chain
-for row in ordenesDB:## no se de que otra forma hacerlo, esta no es la mejor forma!
-  ordenes.set_val(row[0], row[1:5], sqlthis= False)
+# from itertools import chain
+# for row in ordenesDB:## no se de que otra forma hacerlo, esta no es la mejor forma!
+#   ordenes.set_val(row[0], row[1:5], sqlthis= False)
