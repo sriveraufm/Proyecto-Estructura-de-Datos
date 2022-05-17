@@ -87,6 +87,9 @@ def imprimirOrdenes():
     '''
     GET http://127.0.0.1:5000/ordenes
     Regresa el JSON conteniendo todas las ordenes'''
+    # return jsonify(ordenesJson())
+    # json_object = json.loads(ordenes, indent = 4) 
+    # print(json_object)
     return jsonify(ordenesJson())
 
 # despachar ordenes
@@ -130,7 +133,7 @@ def agregarOrden():
         if(int(productoInventario[2])>=totalA):
             if not ordenesQueue.full():
                 total = totalA * float(productoInventario[1])
-                ordenes.set_val(idA, [prodA, totalA, 'PENDIENTE', total])
+                ordenes.set_val(idA, {'PRODUCTO':prodA, 'CANTIDAD': totalA, 'ESTADO':'PENDIENTE', 'TOTAL':total})
                 print(ordenes)
                 inventario.listmodify(prodA,(int(productoInventario[2]) - totalA), 'Inventario')
                 ordenesQueue.add(idA)

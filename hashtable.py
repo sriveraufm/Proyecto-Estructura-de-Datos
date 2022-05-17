@@ -41,7 +41,6 @@ class HashTable:
             bucket.append((key, val))
     # Return searched value with specific key
     def get_val(self, key):
-
     # Get the index from the key using
     # hash function
         hashed_key = hash(key) % self.size
@@ -92,3 +91,14 @@ class HashTable:
     # To print the items of hash map
     def __str__(self):
         return "".join(str(item) for item in self.hash_table)
+
+# test = HashTable(10)
+# test.set_val('t1', 'val1')
+# test.set_val('t2', 'val2')
+
+# # print(test.get_val('t1'))
+
+# res = [{a: {b}} for (a, b) in zip(test.keys, test.get_val())]
+
+# # printing result
+# print("The constructed dictionary : " + str(res))
