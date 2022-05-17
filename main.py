@@ -130,7 +130,6 @@ class HashTable:
             #   if sqlthis: #para no insertar lo del query al inicializar el app
             #     cursor.execute("INSERT INTO Ordenes (ID, NOMBRE, CANTIDAD, ESTADO, TOTAL) VALUES (?, ?, ?, ?, ?)", str(key), str(val[0]), str(val[1]), str(val[2]), str(val[3]))
 
-
     # Return searched value with specific key
     def get_val(self, key):
 
@@ -283,8 +282,6 @@ class SLinkedList:
           break
         nodo = nodo.nextval
     return(productoList)
-    
-
 
 
 def mayus(palabra):
@@ -293,16 +290,16 @@ def mayus(palabra):
   return nvp
 
 
-def guardar():
-  '''Guarda las ordenes en un archivo csv para conservar los cambios'''
+# def guardar():
+#   '''Guarda las ordenes en un archivo csv para conservar los cambios'''
   
-  with open('ordenes.csv', 'w') as csvfile:
-    writer = csv.DictWriter(csvfile, fieldnames=['ID','NOMBRE','CANTIDAD','ESTADO','TOTAL'])
-    writer.writeheader()
-    for key in ordenes.keys:
-        item = ordenes.get_val(key)
-        item.update({'ID': key})
-        writer.writerow(item)
+#   with open('ordenes.csv', 'w') as csvfile:
+#     writer = csv.DictWriter(csvfile, fieldnames=['ID','NOMBRE','CANTIDAD','ESTADO','TOTAL'])
+#     writer.writeheader()
+#     for key in ordenes.keys:
+#         item = ordenes.get_val(key)
+#         item.update({'ID': key})
+#         writer.writerow(item)
 
 
 inventario = SLinkedList()#save = True
