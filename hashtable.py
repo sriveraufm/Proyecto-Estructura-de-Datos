@@ -20,6 +20,7 @@ class HashTable:
         bucket = self.hash_table[hashed_key]
 
         found_key = False
+        
         for index in range(len(bucket)):
             record = bucket[index]
             record_key, record_val = record
@@ -87,18 +88,24 @@ class HashTable:
             # cursor.execute("DELETE FROM Ordenes WHERE ID = '%s'" % (key))
             bucket.pop(index)
         return (found_key)
-            
+    def get_table(self):
+        return list(filter(None, self.hash_table))
     # To print the items of hash map
     def __str__(self):
         return "".join(str(item) for item in self.hash_table)
+        # return self.hash_table
 
-# test = HashTable(10)
-# test.set_val('t1', 'val1')
-# test.set_val('t2', 'val2')
+# test = HashTable(1)
+# test.set_val('t1', {'val1':131, 'val2': 'tetet', 'val3': 'saber'})
+# # test.set_val('t2', 'val2')
+# from itertools import chain
+# print(chain.from_iterable(list(test)))
 
 # # print(test.get_val('t1'))
-
 # res = [{a: {b}} for (a, b) in zip(test.keys, test.get_val())]
 
 # # printing result
 # print("The constructed dictionary : " + str(res))
+# print(hash('orden1'))
+# print(hash('orden2'))
+# print(hash('orden3'))

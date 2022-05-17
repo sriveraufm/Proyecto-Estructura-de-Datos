@@ -9,8 +9,14 @@ import flask_profiler
 import sqlite3
 import threading
 
-
+from flask_cors import CORS, cross_origin
 app = Flask(__name__)
+
+
+app.config['SECRET_KEY'] = 'the quick brown fox jumps over the lazy   dog'
+app.config['CORS_HEADERS'] = 'Content-Type'
+
+cors = CORS(app, resources={r"/foo": {"origins": "http://localhost:port"}})
 
 app.config["DEBUG"] = True 
 
@@ -59,18 +65,6 @@ TREBLLE_INFO = {
     #     "password": "admin"
     # },
 
-def ordenesJson():
-    '''Convierte el array multidimensional de ordenes a un diccionario o nested struct que nos permite enviarlo como JSON'''
-    #printOrdenes()
-    ordenesDict = {"ID":[],"NOMBRE":[],"CANTIDAD":[], "ESTADO":[], "TOTAL":[]};
-    #print('len(ordenes) ',len(ordenes))
-    for key in ordenes.keys:
-        item = list(ordenes.get_val(key))
-        ordenesDict[list(ordenesDict)[0]].append(key)
-        for i in range(0,4):
-            ordenesDict[list(ordenesDict)[i+1]].append(item[i])    
-    return(ordenesDict)
-
 def inventarioJson():
     '''Convierte el linked list de inventario a un diccionario o nested struct que nos permite enviarlo como JSON'''
     invDict = {"PRODUCTO":[],"PRECIO":[],"INVENTARIO":[]};
@@ -87,10 +81,7 @@ def imprimirOrdenes():
     '''
     GET http://127.0.0.1:5000/ordenes
     Regresa el JSON conteniendo todas las ordenes'''
-    # return jsonify(ordenesJson())
-    # json_object = json.loads(ordenes, indent = 4) 
-    # print(json_object)
-    return jsonify(ordenesJson())
+    return jsonify(ordenes.get_table())
 
 # despachar ordenes
 @app.route('/ordenes/despachar', methods=['GET'])
@@ -134,6 +125,7 @@ def agregarOrden():
             if not ordenesQueue.full():
                 total = totalA * float(productoInventario[1])
                 ordenes.set_val(idA, {'PRODUCTO':prodA, 'CANTIDAD': totalA, 'ESTADO':'PENDIENTE', 'TOTAL':total})
+                # ordenes.set_val(idA, {prodA, totalA, 'PENDIENTE', total})
                 print(ordenes)
                 inventario.listmodify(prodA,(int(productoInventario[2]) - totalA), 'Inventario')
                 ordenesQueue.add(idA)
@@ -214,6 +206,7 @@ def inventarioBuscarAPI():
             return(jsonify({"message" : "Este producto no existe en el inventario"}))
 
 @app.route('/inventario/agregar', methods=['PUT'])
+@cross_origin(origin='localhost',headers=['Content- Type','Authorization'])
 def inventarioAgregrarAPI():
     '''API que permite agregar un NUEVO producto al inventario
     Metodo PUT que solicita un "producto", "precio" e "inventario",

@@ -95,5 +95,6 @@ t.insert("PAN")
 t.insert("AGUA")
 t.insert("HELADO")
 t.insert("LECHE")
+t.insert('LECHEEEE')
 
 print(t.query("LECHE"))
