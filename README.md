@@ -23,3 +23,6 @@ Alternativamente se puede utilizar un simple profiler comocido como cProfile den
 <img width="1025" alt="Screen Shot 2022-05-04 at 1 29 08 PM" src="https://user-images.githubusercontent.com/97861517/166811396-25dfd1d1-9e4f-4d94-b008-097a5efdf466.png">
 
 <img width="205" alt="Screen Shot 2022-05-04 at 1 29 08 PM" src="https://user-images.githubusercontent.com/97846712/166832048-f7812465-201b-45ed-84c3-0c7358dc0753.png">
+
+LA DOCUMENTACION DE LOS APIS SE ENCUENTRA EN:
+https://documenter.getpostman.com/view/19550087/UyxnD51S
