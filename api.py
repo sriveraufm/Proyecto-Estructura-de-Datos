@@ -145,8 +145,9 @@ def agregarOrden():
                     'PRODUCTO':solicitud['producto'], 
                     'CANTIDAD': solicitud['cantidad'], 
                     'ESTADO':'PENDIENTE', 
-                    'TOTAL': int(solicitud['cantidad']) * float(inventario.get_val(solicitud['producto'])['PRECIO'])
-		    BPlusTreeV2.BPlusTree.insert(prodA, idA)
+                    'TOTAL': int(solicitud['cantidad']) * float(inventario.get_val(solicitud['producto'])['PRECIO']),
+		    'CLIENTE': solicitud['cliente']
+		    BPlusTreeV2.BPlusTree.insert("Cliente", idOrden)
                 })
                 inventario.set_val(solicitud['producto'],
                 {
