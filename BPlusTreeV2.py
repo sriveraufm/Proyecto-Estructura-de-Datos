@@ -196,3 +196,5 @@ class BPlusTree(object):
 #     # demo_node()
 #     print('\n')
 #     demo_bplustree()
+
+#recurso: recursos varios de internet
