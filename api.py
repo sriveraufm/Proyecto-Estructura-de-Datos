@@ -62,6 +62,7 @@ def despacharOrden():
                     'TOTAL': ordenPrev['TOTAL'],
                     'CLIENTE': ordenPrev['CLIENTE']
                 })
+            registroDespacho.append(ordenDespacho['ID'])
             registroClientes.insert(ordenPrev['CLIENTE'], ordenDespacho['ID'])
             cadenaMensaje = cadena.find_shortest_path(start = solicitud['zonaorigen'], end = solicitud['zonadestino'])
             cadenaMensaje = " ->> Zona: ".join(str(item) for item in cadenaMensaje)
@@ -327,7 +328,7 @@ def inventarioDescuentos():
 @app.route('/ordenes/despachar/registro', methods=['GET'])
 def registroGet():
     '''Permite ver el registro de ordenes despachadas'''
-    return jsonify({'message' : " -> ".join(registroDespacho)})
+    return jsonify({'message' : registroDespacho})
 
 
 @app.route("/docs")

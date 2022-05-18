@@ -7,8 +7,8 @@ class MaxHeap:
 
         self.maxsize = maxsize
         self.size = 0
-        # self.Heap = [0] * (self.maxsize + 1) 
-        # self.Heap[0] = sys.maxsize
+        self.size2 = 0
+        self.r = True
         self.Heap = {}
         for i in range(self.maxsize + 1):
             self.Heap[i] = {
@@ -77,6 +77,7 @@ class MaxHeap:
         if self.size >= self.maxsize:
             return
         self.size += 1
+        self.size2 = 1
         self.Heap[self.size] = element
         current = self.size
         # print('nani')
@@ -102,7 +103,11 @@ class MaxHeap:
     def extractMax(self):
         if self.size == 1:
             self.size -= 1
-            return self.Heap[2]
+            if self.Heap[2] is None or self.Heap[2]['ID'] == '':
+                if self.Heap[1]['ID'] != '':
+                    return self.Heap[1]
+            else:
+                return self.Heap[2]
         if not self.empty():
             # print(self.Heap)
             popped = self.Heap[self.FRONT]
@@ -147,22 +152,26 @@ class MaxHeap:
 #     'ID': '2eb1c0e0-a109-42a4-929d-8363901c9cf7',
 #     'TOTAL': 133.0
 # })
+
+# test.insert({
+#     'ID': 'id4',
+#     'TOTAL': 10223
+# })
 # test.insert({
 #     'ID': '4eb49126-cde0-4e20-b968-9df3d59e9a63',
 #     'TOTAL': 1225.0
 # })
-# # test.insert({
-# #     'ID': 'id4',
-# #     'TOTAL': 103
-# # })
-# test.insert({
-#     'ID': '02f0739b-19b6-418c-8ee2-a2c1f3648636',
-#     'TOTAL': 3.0
-# })
-# print('esto')
-# # test.Print() 
-# print(test.Heap)
+# # # test.insert({
+# # #     'ID': '02f0739b-19b6-418c-8ee2-a2c1f3648636',
+# # #     'TOTAL': 3.0
+# # # })
+# # # print('esto')
+# # # # test.Print() 
+# # # print(test.Heap)
 # print(test.extractMax())
+# print(test.extractMax())
+# print(test.extractMax())
+
 # print(test.extractMax())
 # print(test.extractMax())
 # # test.Print()
