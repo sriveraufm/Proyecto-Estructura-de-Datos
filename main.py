@@ -17,6 +17,7 @@ class Node:
       self.nextval = None
   cProfile.runctx("__init__", globals(), locals())
 
+
 class SLinkedList:
   '''Define la linked list que utilizaremos para manejar nuestro inventario'''
   def __init__(self):#, save
@@ -114,7 +115,8 @@ def mayus(palabra):
   nvp = palabra.upper()
   return nvp
 
-inventario = SLinkedList()
+# inventario = SLinkedList()
+inventario = HashTable(size=50)
 ordenesQueue = Queue(maxsize=6)
 ordenes = HashTable(size = 50)
 
