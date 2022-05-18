@@ -9,7 +9,6 @@ from flask import jsonify
 from hashtable import HashTable
 from Queue import Queue
 from grafo import *
-from LinkedList import * 
 from BPlusTreeV2 import BPlusTree
 from MaxHeap import *
 def mayus(palabra):
@@ -51,7 +50,7 @@ ciudad = {
 
 cadena = ciudadGT(ciudad)
 
-registroDespacho = LinkedList()
+registroDespacho = []
 
 clientesTree = BPlusTree()
 
