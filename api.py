@@ -84,13 +84,51 @@ def imprimirOrdenes():
     return jsonify(ordenes.get_table())
 
 # despachar ordenes
-@app.route('/ordenes/despachar', methods=['GET'])
+@app.route('/ordenes/despachar', methods=['PUT'])
 def despacharOrden():
+    global cadena
     if ordenesQueue.size() > 0:
-        mensaje = "La orden",ordenesQueue.get(), "ha sido despachada."
-        return jsonify({'message' : " ".join(mensaje)})
+        req = request.get_json(force=True)
+        orden = {'zonaorigen' : req['zonaorigen'], 'zonadestino' : req['zonadestino'],}
+        print(orden['zonaorigen'])
+        print('nani')
+        if orden['zonadestino'] not in set(ciudad.keys()):
+            return jsonify({'message' : "No contamos con ruta disponible para la zona de destino y zona de origen solicidada."})
+        else:
+            cadenaMensaje = cadena.find_shortest_path(start = orden['zonaorigen'], end = orden['zonadestino'])
+            cadenaMensaje = " ->> Zona: ".join(str(item) for item in cadenaMensaje)
+            return jsonify({
+            'ordenDespachada' : ordenesQueue.get(),
+            'rutaOptima': 'Zona: '+ cadenaMensaje
+            })
     else:
-        return jsonify({'message' : "No hay órdenes en la lista de espera de despacho."})
+        return jsonify({
+            'message' : "No hay órdenes en la lista de espera de despacho."
+            })
+
+@app.route('/rutas', methods=['GET'])
+def rutasAB():
+    global cadena
+    req = request.get_json(force=True)
+    orden = {'zonaorigen' : req['zonaorigen'], 'zonadestino' : req['zonadestino'],}
+    if orden['zonadestino'] not in set(ciudad.keys()):
+        return jsonify({'message' : "No contamos con ruta disponible para la zona de destino y zona de origen solicidada."})
+    else:
+        
+        # cadenaMensaje = cadena.find_shortest_path(start = orden['zonaorigen'], end = orden['zonadestino'])
+        # cadenaMensaje = " ->> Zona: ".join(str(item) for item in cadenaMensaje)
+        print(cadena.find_all_paths(start = orden['zonaorigen'], end = orden['zonadestino']))
+        return jsonify({
+        # 'ordenDespachada' : ordenesQueue.get(),
+        # 'rutaOptima': 'Zona: '+ cadenaMensaje
+        'rutas': cadena.find_all_paths(start = orden['zonaorigen'], end = orden['zonadestino'])
+        })
+
+
+@app.route('/ordenes/despachar/rutas', methods=['GET'])
+def rutas():
+    global ciudad
+    return jsonify(ciudad)
 
 # ordenes queue
 @app.route('/ordenes/queue', methods=['GET'])
@@ -221,7 +259,6 @@ def inventarioAgregrarAPI():
     req = request.get_json(force=True)
     orden = {'PRODUCTO' : req['producto'],'PRECIO' : req['precio'], 'INVENTARIO': req['inventario']}
     producto = mayus(str(list(orden.values())[0]))
-
     precio = float(list(orden.values())[1])
     inv = int(list(orden.values())[2])
     # if(inventario.listfind(producto) is not None):
