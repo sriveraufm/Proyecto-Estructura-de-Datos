@@ -162,22 +162,22 @@ def pagar():
     else:
         return(jsonify({"message" : "La orden no ha sido encontrada"}))
 
-# # anular orden
-# @app.route('/ordenes/anular', methods=['PUT'])
-# def anular():
-#     '''API para anular una orden
-#     Metodo PUT que solicita un "id"
-#     ejemplo:
-#     PUT http://127.0.0.1:5000/ordenes/anular
-#     {
-#     "id":"DhjVjQwyJs"
-#     }'''
-#     solicitud = request.get_json(force=True)
-#     if ordenes.delete(solicitud['id']):
-#         # ordenesQueue.anular(solicitud['id']) esto falta...
-#         return(jsonify({"message" :"Orden eliminada con exito"}))
-#     else:
-#         return(jsonify({"message" : "La orden no ha sido encontrada"}))
+# anular orden
+@app.route('/ordenes/anular', methods=['PUT'])
+def anular():
+    '''API para anular una orden
+    Metodo PUT que solicita un "id"
+    ejemplo:
+    PUT http://127.0.0.1:5000/ordenes/anular
+    {
+    "id":"DhjVjQwyJs"
+    }'''
+    solicitud = request.get_json(force=True)
+    if ordenes.delete(solicitud['id']):
+        # ordenesQueue.anular(solicitud['id']) esto falta...
+        return(jsonify({"message" :"Orden eliminada con exito"}))
+    else:
+        return(jsonify({"message" : "La orden no ha sido encontrada"}))
 
 @app.route('/inventario', methods=['GET'])
 def inventarioimprimirAPI():
