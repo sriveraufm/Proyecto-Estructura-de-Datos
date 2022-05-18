@@ -94,3 +94,4 @@ class HashTable:
 # # print(test.get_table())
 # print(test.get_val('t1')['val1'])
 
+#Fuente: https://www.geeksforgeeks.org/hash-map-in-python/
