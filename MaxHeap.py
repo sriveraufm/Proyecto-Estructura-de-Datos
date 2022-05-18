@@ -143,25 +143,25 @@ class MaxHeap:
         #
 
 
-test = MaxHeap(15)
-test.insert({
-    'ID': 'id1',
-    'TOTAL': 100
-})
-test.insert({
-    'ID': 'id2',
-    'TOTAL': 1003
-})
+# test = MaxHeap(15)
 # test.insert({
-#     'ID': 'id4',
-#     'TOTAL': 103
+#     'ID': 'id1',
+#     'TOTAL': 100
 # })
-test.insert({
-    'ID': 'id3',
-    'TOTAL': 10
-})
-print('esto')
-test.Print()
-print('del')
-test.delete('id2')
-test.Print()
+# test.insert({
+#     'ID': 'id2',
+#     'TOTAL': 1003
+# })
+# # test.insert({
+# #     'ID': 'id4',
+# #     'TOTAL': 103
+# # })
+# test.insert({
+#     'ID': 'id3',
+#     'TOTAL': 10
+# })
+# print('esto')
+# test.Print()
+# print('del')
+# test.delete('id2')
+# test.Print()
