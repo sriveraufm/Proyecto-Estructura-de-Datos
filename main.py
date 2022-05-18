@@ -8,7 +8,7 @@ import cProfile
 from flask import jsonify
 from hashtable import HashTable
 from Queue import Queue
-
+from grafo import *
 
 class Node:
   '''Define el Nodo que utilizaremos en la linked list del inventario'''
