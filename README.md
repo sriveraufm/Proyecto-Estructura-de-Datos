@@ -29,3 +29,18 @@ Alternativamente se puede utilizar un simple profiler comocido como cProfile den
 # DOCUMENTACION
 PUEDE VER LA DOCUMENTACION DE LOS APIS EN:
 https://documenter.getpostman.com/view/19550087/UyxnD51S
+
+# TESTING
+
+
+![Screenshot 2022-05-18 173032](https://user-images.githubusercontent.com/97861517/169171848-e3eff95f-2bb2-444b-8d0b-8f77834de865.png)
+
+![Screenshot 2022-05-18 173041](https://user-images.githubusercontent.com/97861517/169171861-3c1c0438-9af4-426f-9cba-fb78cad0daff.png)
+![Screenshot 2022-05-18 173053](https://user-images.githubusercontent.com/97861517/169171870-1512bb1c-a147-4023-b5c2-7350f3974347.png)
+![Screenshot 2022-05-18 173059](https://user-images.githubusercontent.com/97861517/169171872-4e9a6942-979d-4630-b299-7572eb7f4521.png)
+![Screenshot 2022-05-18 173108](https://user-images.githubusercontent.com/97861517/169171877-5105c4d7-6e17-4ac1-b96c-36b76850d408.png)
+
+![Screenshot 2022-05-18 173113](https://user-images.githubusercontent.com/97861517/169171882-904c4fb8-985e-42e5-9ac8-437ff1e098bf.png)
+![Screenshot 2022-05-18 173121](https://user-images.githubusercontent.com/97861517/169171888-d66ddd40-70a7-4709-9804-492a9f5a7bea.png)
+
+
