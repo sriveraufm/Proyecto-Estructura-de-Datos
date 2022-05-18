@@ -31,7 +31,7 @@ class LinkedList:
             nodo = nodo.nextval
         return(productoList)
 
-test = LinkedList()
-test.agregar('test')
-test.agregar('test2')
-test.listprint()
+# test = LinkedList()
+# test.agregar('test')
+# test.agregar('test2')
+# test.listprint()

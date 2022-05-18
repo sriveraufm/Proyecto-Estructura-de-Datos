@@ -170,28 +170,29 @@ class BPlusTree(object):
 #     node.split()
 #     node.show()
 
-def demo_bplustree():
-    print('Initializing B+ tree...')
-    bplustree = BPlusTree(order=4)
+# def demo_bplustree():
+#     print('Initializing B+ tree...')
+#     bplustree = BPlusTree(order=4)
 
-    # print('\nB+ tree with 1 item...')
-    # bplustree.insert('71bd71j5plao9', '71bd71j5plao9')
-    # bplustree.show()
+#     # print('\nB+ tree with 1 item...')
+#     # bplustree.insert('71bd71j5plao9', '71bd71j5plao9')
+#     # bplustree.show()
 
-    # print('\nB+ tree with 2 items...')
-    bplustree.insert('hola', 'mundo')
-    # bplustree.show()
+#     # print('\nB+ tree with 2 items...')
+#     bplustree.insert('hola', 'mundo')
+#     # bplustree.show()
 
-    # print('\nB+ tree with 3 items...')
-    bplustree.insert('hola','perros')
-    bplustree.insert('hola','gatos')
-    bplustree.insert('hol','amigos')
-    bplustree.show()
+#     # print('\nB+ tree with 3 items...')
+#     bplustree.insert('hola','perros')
+#     bplustree.insert('hola','gatos')
+#     bplustree.insert('hol','amigos')
+#     print('esto')
+#     bplustree.show()
 
-    print('\nRetrieving values with key hola...')
-    print(bplustree.retrieve('hola'))
+#     print('\nRetrieving values with key hola...')
+#     print(bplustree.retrieve('hola'))
 
-if __name__ == '__main__':
-    # demo_node()
-    print('\n')
-    demo_bplustree()
+# if __name__ == '__main__':
+#     # demo_node()
+#     print('\n')
+#     demo_bplustree()

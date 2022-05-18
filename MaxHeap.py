@@ -45,7 +45,7 @@ class MaxHeap:
     # node is a leaf node
     def isLeaf(self, pos):
 
-        if pos >= (self.size//2) and pos <= self.size:
+        if self.Heap[pos]['TOTAL'] >= (self.size//2) and self.Heap[pos]['TOTAL'] <= self.size:
             return True
         return False
 
@@ -57,18 +57,15 @@ class MaxHeap:
 
     # Function to heapify the node at pos
     def maxHeapify(self, pos):
-
     # If the node is a non-leaf node and smaller
     # than any of its child
         if not self.isLeaf(pos):
             if (self.Heap[pos]['TOTAL'] < self.Heap[self.leftChild(pos)]['TOTAL'] or self.Heap[pos]['TOTAL'] < self.Heap[self.rightChild(pos)]['TOTAL']):
-
                 # Swap with the left child and heapify
                 # the left child
                 if (self.Heap[self.leftChild(pos)]['TOTAL'] > self.Heap[self.rightChild(pos)]['TOTAL']):
                     self.swap(pos, self.leftChild(pos))
                     self.maxHeapify(self.leftChild(pos))
-
                 # Swap with the right child and heapify
                 # the right child
                 else:
@@ -103,12 +100,18 @@ class MaxHeap:
         # Function to remove and return the maximum
         # element from the heap
     def extractMax(self):
-
-        popped = self.Heap[self.FRONT]
-        self.Heap[self.FRONT] = self.Heap[self.size]
-        self.size -= 1
-        self.maxHeapify(self.FRONT)
-        return popped
+        if self.size == 1:
+            self.size -= 1
+            return self.Heap[2]
+        if not self.empty():
+            # print(self.Heap)
+            popped = self.Heap[self.FRONT]
+            self.Heap[self.FRONT] = self.Heap[self.size]
+            self.size -= 1
+            self.maxHeapify(self.FRONT)
+            return popped
+        else:
+            return None
 
     def full(self):
         return self.maxsize == self.size
@@ -125,8 +128,6 @@ class MaxHeap:
     def delete(self, key):
         for i in range(1, self.size + 1):
                 if self.Heap[i]['ID'] == key:
-                    print('mega nani')
-                    print(self.Heap[i])
                     self.Heap[i] = {
                         'ID': '',
                         'TOTAL': -1
@@ -135,8 +136,6 @@ class MaxHeap:
                     self.maxHeapify(self.FRONT)
                     break
         current = self.size
-        print('nani')
-        print(self.Heap)
         while (self.Heap[current]['TOTAL'] > self.Heap[self.parent(current)]['TOTAL']):
             self.swap(current, self.parent(current))
             current = self.parent(current)
@@ -145,23 +144,28 @@ class MaxHeap:
 
 # test = MaxHeap(15)
 # test.insert({
-#     'ID': 'id1',
-#     'TOTAL': 100
+#     'ID': '2eb1c0e0-a109-42a4-929d-8363901c9cf7',
+#     'TOTAL': 133.0
 # })
 # test.insert({
-#     'ID': 'id2',
-#     'TOTAL': 1003
+#     'ID': '4eb49126-cde0-4e20-b968-9df3d59e9a63',
+#     'TOTAL': 1225.0
 # })
 # # test.insert({
 # #     'ID': 'id4',
 # #     'TOTAL': 103
 # # })
 # test.insert({
-#     'ID': 'id3',
-#     'TOTAL': 10
+#     'ID': '02f0739b-19b6-418c-8ee2-a2c1f3648636',
+#     'TOTAL': 3.0
 # })
 # print('esto')
-# test.Print()
-# print('del')
-# test.delete('id2')
-# test.Print()
+# # test.Print() 
+# print(test.Heap)
+# print(test.extractMax())
+# print(test.extractMax())
+# print(test.extractMax())
+# # test.Print()
+# # print('del')
+# # test.delete('id2')
+# # test.Print()

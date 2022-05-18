@@ -54,3 +54,25 @@ cadena = ciudadGT(ciudad)
 registroDespacho = LinkedList()
 
 clientesTree = BPlusTree()
+
+registroClientes = BPlusTree(order=4)
+
+
+
+
+inventario.set_val('LECHE', {
+    "PRECIO": 51,
+    "INVENTARIO": 303
+})
+inventario.set_val('CAFE', {
+    "PRECIO": 44,
+    "INVENTARIO": 250
+})
+inventario.set_val('AGUA', {
+    "PRECIO": 5,
+    "INVENTARIO": 1000
+})
+inventario.set_val('PASTEL', {
+    "PRECIO": 150,
+    "INVENTARIO": 333
+})

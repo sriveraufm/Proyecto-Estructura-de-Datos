@@ -36,7 +36,6 @@ class HashTable:
         # Otherwise append the new key-value pair to the bucket
         if found_key:
             bucket[index] = (key, val)
-            # cursor.execute("UPDATE Ordenes SET ESTADO = '%s' WHERE ID = '%s'" % ("PAGADA",key))
         else:
             self.keys.append(key)
             bucket.append((key, val))

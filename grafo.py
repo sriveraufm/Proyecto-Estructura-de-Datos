@@ -32,7 +32,7 @@ class ciudadGT:
             if 'newpaths' in locals():
                 for newpath in newpaths:
                     paths.append(newpath)
-        return paths
+        return sorted(list(set(tuple(sorted(sub)) for sub in paths)), key=len)
 
     def find_shortest_path(self, start, end, path =[]):
         path = path + [start]
