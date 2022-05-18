@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "Get ordenes",
+			"name": "Get ventas",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -14,8 +14,13 @@
 				"method": "GET",
 				"header": [],
 				"body": {
-					"mode": "urlencoded",
-					"urlencoded": []
+					"mode": "raw",
+					"raw": "    {\r\n        \"cliente\" : \"Sebastian\",\r\n        \"producto\":\"LECHE\",\r\n        \"cantidad\": 2456\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
 					"raw": "http://127.0.0.1:5000/ordenes",
@@ -35,13 +40,16 @@
 			"response": []
 		},
 		{
-			"name": "Agregar orden",
+			"name": "Get ordenes despachadas del cliente",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
-				"method": "PUT",
+				"method": "GET",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"nombre\":\"cafe\",\r\n    \"cantidad\": 15\r\n}",
+					"raw": "    {\r\n        \"cliente\" : \"Sebastian\"\r\n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -49,7 +57,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:5000/ordenes/generar",
+					"raw": "http://127.0.0.1:5000/ordenes/despachadas/cliente",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -60,28 +68,20 @@
 					"port": "5000",
 					"path": [
 						"ordenes",
-						"generar"
+						"despachadas",
+						"cliente"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Anular orden",
+			"name": "Get ordenes despachadas generalizadas",
 			"request": {
-				"method": "PUT",
+				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"id\":\"DhjVjQwyJs\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "http://127.0.0.1:5000/ordenes/anular",
+					"raw": "http://127.0.0.1:5000/ordenes/despachar/registro",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -92,28 +92,20 @@
 					"port": "5000",
 					"path": [
 						"ordenes",
-						"anular"
+						"despachar",
+						"registro"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Agregar productos a inventario",
+			"name": "Ordenes queue",
 			"request": {
-				"method": "PUT",
+				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"producto\":\"leche\",\r\n    \"precio\": 12,\r\n    \"inventario\": 220\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "http://127.0.0.1:5000/inventario/agregar",
+					"raw": "http://127.0.0.1:5000/ordenes/queue",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -123,8 +115,73 @@
 					],
 					"port": "5000",
 					"path": [
-						"inventario",
-						"agregar"
+						"ordenes",
+						"queue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get rutas posibles entre Cliente y Despacho",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"zonaorigen\": 5,\r\n    \"zonadestino\": 16\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/rutas",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"rutas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get zonas",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/ordenes/despachar/rutas",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"ordenes",
+						"despachar",
+						"rutas"
 					]
 				}
 			},
@@ -153,13 +210,176 @@
 			"response": []
 		},
 		{
+			"name": "Buscar producto",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"producto\":\"PALETA\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/inventario/buscar",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"inventario",
+						"buscar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar orden",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \"cliente\" : \"Sebastian\",\r\n        \"producto\":\"AGUA\",\r\n        \"cantidad\": 3\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/ordenes/generar",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"ordenes",
+						"generar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Despachar ordenes",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \"zonaorigen\":10,\r\n        \"zonadestino\": 16\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/ordenes/despachar",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"ordenes",
+						"despachar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ordenes pagar",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"4ecf9e39-df50-4ad6-b380-a2931d7c4059\",\r\n    \"tarjeta\": \"1414\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/ordenes/pagar",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"ordenes",
+						"pagar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar productos a inventario",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"producto\": \"LECHE\",\r\n    \"precio\": 51,\r\n    \"inventario\": 30330\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/inventario/agregar",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"inventario",
+						"agregar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Aplicar descuentos",
 			"request": {
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"producto\" : \"leche\",\r\n    \"descuento\": 40\r\n\r\n}",
+					"raw": "{\r\n    \"producto\" : \"CAFE\",\r\n    \"descuento\": 50\r\n\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -191,7 +411,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"producto\" : \"leche\",\r\n    \"inventario\": 100\r\n\r\n}",
+					"raw": "{\r\n    \"producto\" : \"CAFE\",\r\n    \"inventario\": 10000\r\n\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -217,13 +437,13 @@
 			"response": []
 		},
 		{
-			"name": "Ordenes pagar",
+			"name": "Borrar inventario",
 			"request": {
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"DhjVjQwyJs\",\r\n    \"tarjeta\": \"1414\"\r\n}",
+					"raw": "{\r\n    \"producto\" : \"CAFE\"\r\n\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -231,7 +451,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:5000/ordenes/pagar",
+					"raw": "http://127.0.0.1:5000/inventario/borrar",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -241,8 +461,8 @@
 					],
 					"port": "5000",
 					"path": [
-						"ordenes",
-						"pagar"
+						"inventario",
+						"borrar"
 					]
 				}
 			},
