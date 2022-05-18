@@ -46,3 +46,4 @@ class ciudadGT:
                     if not shortest or len(newpath) < len(shortest):
                         shortest = newpath
         return shortest
+#Recurso: recursos varios de internet
