@@ -20,6 +20,7 @@ inventario = HashTable(size=50)
 ordenesQueue = Queue(maxsize=6)
 ordenes = HashTable(size = 50)
 
+# cada key es una zona de la ciudad
 ciudad = {
     0 : [10, 15],#CARRETERA
     1 : [3, 5, 2, 6],

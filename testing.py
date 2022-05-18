@@ -1,114 +1,123 @@
-# A complete working Python program to demonstrate all
-# insertion methods of linked list
+# Python3 implementation of Max Heap
+import sys
 
-# Node class
-class Node:
+class MaxHeap:
 
-	# Function to initialise the node object
-	def __init__(self, data):
-		self.data = data # Assign data
-		self.next = None # Initialize next as null
+	def __init__(self, maxsize):
+		
+		self.maxsize = maxsize
+		self.size = 0
+		self.Heap = [0] * (self.maxsize + 1)
+		self.Heap[0] = sys.maxsize
+		self.FRONT = 1
 
+	# Function to return the position of
+	# parent for the node currently
+	# at pos
+	def parent(self, pos):
+		
+		return pos // 2
 
-# Linked List class contains a Node object
-class LinkedList:
+	# Function to return the position of
+	# the left child for the node currently
+	# at pos
+	def leftChild(self, pos):
+		
+		return 2 * pos
 
-	# Function to initialize head
-	def __init__(self):
-		self.head = None
+	# Function to return the position of
+	# the right child for the node currently
+	# at pos
+	def rightChild(self, pos):
+		
+		return (2 * pos) + 1
 
+	# Function that returns true if the passed
+	# node is a leaf node
+	def isLeaf(self, pos):
+		
+		if pos >= (self.size//2) and pos <= self.size:
+			return True
+		return False
 
-	# Function to insert a new node at the beginning
-	def push(self, new_data):
+	# Function to swap two nodes of the heap
+	def swap(self, fpos, spos):
+		
+		self.Heap[fpos], self.Heap[spos] = (self.Heap[spos],
+											self.Heap[fpos])
 
-		# 1 & 2: Allocate the Node &
-		#	 Put in the data
-		new_node = Node(new_data)
+	# Function to heapify the node at pos
+	def maxHeapify(self, pos):
 
-		# 3. Make next of new Node as head
-		new_node.next = self.head
+		# If the node is a non-leaf node and smaller
+		# than any of its child
+		if not self.isLeaf(pos):
+			if (self.Heap[pos] < self.Heap[self.leftChild(pos)] or
+				self.Heap[pos] < self.Heap[self.rightChild(pos)]):
 
-		# 4. Move the head to point to new Node
-		self.head = new_node
+				# Swap with the left child and heapify
+				# the left child
+				if (self.Heap[self.leftChild(pos)] >
+					self.Heap[self.rightChild(pos)]):
+					self.swap(pos, self.leftChild(pos))
+					self.maxHeapify(self.leftChild(pos))
 
+				# Swap with the right child and heapify
+				# the right child
+				else:
+					self.swap(pos, self.rightChild(pos))
+					self.maxHeapify(self.rightChild(pos))
 
-	# This function is in LinkedList class. Inserts a
-	# new node after the given prev_node. This method is
-	# defined inside LinkedList class shown above */
-	def insertAfter(self, prev_node, new_data):
-
-		# 1. check if the given prev_node exists
-		if prev_node is None:
-			print("The given previous node must inLinkedList.")
+	# Function to insert a node into the heap
+	def insert(self, element):
+		
+		if self.size >= self.maxsize:
 			return
+		self.size += 1
+		self.Heap[self.size] = element
 
-		# 2. create new node &
-		#	 Put in the data
-		new_node = Node(new_data)
+		current = self.size
 
-		# 4. Make next of new Node as next of prev_node
-		new_node.next = prev_node.next
+		while (self.Heap[current] >
+			self.Heap[self.parent(current)]):
+			self.swap(current, self.parent(current))
+			current = self.parent(current)
 
-		# 5. make next of prev_node as new_node
-		prev_node.next = new_node
+	# Function to print the contents of the heap
+	def Print(self):
+		
+		for i in range(1, (self.size // 2) + 1):
+			print(" PARENT : " + str(self.Heap[i]) +
+				" LEFT CHILD : " + str(self.Heap[2 * i]) +
+				" RIGHT CHILD : " + str(self.Heap[2 * i + 1]))
 
+	# Function to remove and return the maximum
+	# element from the heap
+	def extractMax(self):
 
-	# This function is defined in Linked List class
-	# Appends a new node at the end. This method is
-	# defined inside LinkedList class shown above */
-	def append(self, new_data):
+		popped = self.Heap[self.FRONT]
+		self.Heap[self.FRONT] = self.Heap[self.size]
+		self.size -= 1
+		self.maxHeapify(self.FRONT)
+		
+		return popped
 
-		# 1. Create a new node
-		# 2. Put in the data
-		# 3. Set next as None
-		new_node = Node(new_data)
+# Driver Code
+if __name__ == "__main__":
+	
+	print('The maxHeap is ')
+	
+	maxHeap = MaxHeap(15)
+	maxHeap.insert([5])
+	maxHeap.insert(3)
+	maxHeap.insert(17)
+	maxHeap.insert(10)
+	maxHeap.insert(84)
+	maxHeap.insert(19)
+	maxHeap.insert(6)
+	maxHeap.insert(22)
+	maxHeap.insert(9)
 
-		# 4. If the Linked List is empty, then make the
-		# new node as head
-		if self.head is None:
-			self.head = new_node
-			return
-
-		# 5. Else traverse till the last node
-		last = self.head
-		while (last.next):
-			last = last.next
-
-		# 6. Change the next of last node
-		last.next = new_node
-
-
-	# Utility function to print the linked list
-	def printList(self):
-		temp = self.head
-		while (temp):
-			print(temp.data,end=" ")
-			temp = temp.next
-
-
-
-# Code execution starts here
-if __name__=='__main__':
-
-	# Start with the empty list
-	llist = LinkedList()
-
-	# Insert 6. So linked list becomes 6->None
-	llist.append(6)
-
-	# Insert 7 at the beginning. So linked list becomes 7->6->None
-	llist.push(7);
-
-	# Insert 1 at the beginning. So linked list becomes 1->7->6->None
-	llist.push(1);
-
-	# Insert 4 at the end. So linked list becomes 1->7->6->4->None
-	llist.append(4)
-
-	# Insert 8, after 7. So linked list becomes 1 -> 7-> 8-> 6-> 4-> None
-	llist.insertAfter(llist.head.next, 8)
-
-	print('Created linked list is: ')
-	llist.printList()
-
-# This code is contributed by Manikantan Narasimhan
+	maxHeap.Print()
+	
+	print("The Max val is " + str(maxHeap.extractMax()))
