@@ -77,17 +77,18 @@ def imprimirOrdenes():
 @app.route('/ordenes/despachar', methods=['PUT'])
 def despacharOrden():
     global cadena
-    if ordenesQueue.size() > 0:
+    if ordenesQueue.size > 0:
         solicitud = request.get_json(force=True)
         if solicitud['zonadestino'] not in set(ciudad.keys()):
             return jsonify({'message' : "No contamos con ruta disponible para la zona de destino y zona de origen solicidada."})
         else:
-            ordenDespacho = ordenesQueue.get()
-            registroDespacho.append(ordenDespacho)
+            ordenDespacho = ordenesQueue.extractMax()
+            # registroDespacho.append(ordenDespacho)
             cadenaMensaje = cadena.find_shortest_path(start = solicitud['zonaorigen'], end = solicitud['zonadestino'])
             cadenaMensaje = " ->> Zona: ".join(str(item) for item in cadenaMensaje)
             return jsonify({
-            'ordenDespachada' : ordenDespacho,
+            'ordenDespachada' : ordenDespacho['ID'],
+            'TotalOrden' : ordenDespacho['TOTAL'],
             'rutaOptima': 'Zona: '+ cadenaMensaje
             })
     else:
@@ -141,11 +142,12 @@ def agregarOrden():
     if inventario.exists(solicitud['producto']):
         if(int(inventario.get_val(solicitud['producto'])['INVENTARIO'])>=solicitud['cantidad']):
             if not ordenesQueue.full():
+                totalOrden = int(solicitud['cantidad']) * float(inventario.get_val(solicitud['producto'])['PRECIO'])
                 ordenes.set_val(idOrden, {
                     'PRODUCTO':solicitud['producto'], 
                     'CANTIDAD': solicitud['cantidad'], 
                     'ESTADO':'PENDIENTE', 
-                    'TOTAL': int(solicitud['cantidad']) * float(inventario.get_val(solicitud['producto'])['PRECIO']),
+                    'TOTAL': totalOrden,
                     'CLIENTE': solicitud['cliente']
                 })
                 # clientesTree.insert("Cliente", idOrden)
@@ -154,7 +156,6 @@ def agregarOrden():
                     'PRECIO' :  inventario.get_val(solicitud['producto'])['PRECIO'],
                     'INVENTARIO' :  inventario.get_val(solicitud['producto'])['INVENTARIO'] - solicitud['cantidad']
                 })
-                ordenesQueue.add(idOrden)
                 return jsonify({'message' : "Orden agregada exitosamente"})
             else:
                 return jsonify({'message' : "Límite de órdenes diario alcanzado"})
@@ -181,10 +182,14 @@ def pagar():
     if(solicitud['tarjeta'] != '1414'):# SIMULACION DE RESPUESTA DE VISANET
         return(jsonify({'message' : "El metodo de pago no ha sido aceptado."}))
     g = 0
-    values = list(ordenes.get_val(solicitud['id']))
+    values = ordenes.get_val(solicitud['id'])
     if values is not None:
         values['ESTADO'] = 'PAGADA'
         ordenes.set_val(solicitud['id'], values)
+        ordenesQueue.insert({
+                    'ID': solicitud['id'],
+                    'TOTAL': ordenes.get_val(solicitud['id'])['TOTAL']
+                })
         return(jsonify({"message" :"Orden pagada con exito"}))
     else:
         return(jsonify({"message" : "La orden no ha sido encontrada"}))

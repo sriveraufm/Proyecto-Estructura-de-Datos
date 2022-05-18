@@ -250,8 +250,8 @@ class BPlusTree(object):
 
     def __setitem__(self, key, value, leaf=None):
         """Inserts a key-value pair after traversing to a leaf node. If the leaf node is full, split
-              the leaf node into two.
-              """
+            the leaf node into two.
+            """
         if leaf is None:
             leaf = self.find(key)
         leaf[key] = value

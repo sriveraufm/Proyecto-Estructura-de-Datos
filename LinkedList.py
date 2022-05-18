@@ -1,6 +1,3 @@
-from testing import LinkedList
-
-
 class Node:
     '''Define el Nodo que utilizaremos en la linked list del inventario'''
     def __init__(self, dataval=None):

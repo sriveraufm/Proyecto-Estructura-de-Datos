@@ -11,13 +11,16 @@ from Queue import Queue
 from grafo import *
 from LinkedList import * 
 from BPlusTreeV2 import BPlusTree
+from MaxHeap import *
 def mayus(palabra):
   ''' convierte a mayuscula la palabra o  string dada'''
   nvp = palabra.upper()
   return nvp
 
 inventario = HashTable(size=50)
-ordenesQueue = Queue(maxsize=6)
+# ordenesQueue = Queue(maxsize=6)
+ordenesQueue = MaxHeap(15)
+
 ordenes = HashTable(size = 50)
 
 # cada key es una zona de la ciudad
