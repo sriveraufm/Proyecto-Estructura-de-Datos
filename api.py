@@ -25,7 +25,7 @@ app.config["DEBUG"] = True
 INSTALLEDD_APPS = [
     'treblle',
 ]
- 
+
 # Enable the Treblle SDK middleware
 MIDDLEWARE_CLASSES = [
     'treblle.middleware.TreblleMiddleware',
