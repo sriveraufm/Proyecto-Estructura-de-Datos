@@ -8,7 +8,7 @@ from flask import Flask, render_template, request, flash, redirect, url_for
 import flask_profiler
 import sqlite3
 import threading
-import BPlusTreeV2
+
 
 from flask_cors import CORS, cross_origin
 app = Flask(__name__)
@@ -146,9 +146,9 @@ def agregarOrden():
                     'CANTIDAD': solicitud['cantidad'], 
                     'ESTADO':'PENDIENTE', 
                     'TOTAL': int(solicitud['cantidad']) * float(inventario.get_val(solicitud['producto'])['PRECIO']),
-		    'CLIENTE': solicitud['cliente']
-		    BPlusTreeV2.BPlusTree.insert("Cliente", idOrden)
+                    'CLIENTE': solicitud['cliente']
                 })
+                # clientesTree.insert("Cliente", idOrden)
                 inventario.set_val(solicitud['producto'],
                 {
                     'PRECIO' :  inventario.get_val(solicitud['producto'])['PRECIO'],

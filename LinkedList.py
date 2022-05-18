@@ -3,16 +3,15 @@ from testing import LinkedList
 
 class Node:
     '''Define el Nodo que utilizaremos en la linked list del inventario'''
-def __init__(self, dataval=None):
-    self.dataval = dataval
-    self.nextval = None
+    def __init__(self, dataval=None):
+        self.dataval = dataval
+        self.nextval = None
 
 
 class LinkedList:
     '''Define la linked list que utilizaremos para manejar nuestro inventario'''
     def __init__(self):
         self.headval = None
-
     def agregar(self, newdata):
         '''Agrega un nuevo valor al nodo'''
         nodoNuevo = Node(newdata)
@@ -23,7 +22,7 @@ class LinkedList:
         ''' imprime todos los nodos de la lista'''
         nodo = self.headval
         while nodo is not None:
-            print (nodo.dataval)
+            print (nodo.dataval,end="->")
             nodo = nodo.nextval
     def listfind(self, producto):
         '''busca el nodo que contenga el producto dado'''
@@ -37,5 +36,5 @@ class LinkedList:
 
 test = LinkedList()
 test.agregar('test')
-
+test.agregar('test2')
 test.listprint()

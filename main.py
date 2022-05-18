@@ -10,7 +10,7 @@ from hashtable import HashTable
 from Queue import Queue
 from grafo import *
 from LinkedList import * 
-
+from BPlusTreeV2 import BPlusTree
 def mayus(palabra):
   ''' convierte a mayuscula la palabra o  string dada'''
   nvp = palabra.upper()
@@ -48,3 +48,5 @@ ciudad = {
 cadena = ciudadGT(ciudad)
 
 registroDespacho = LinkedList()
+
+clientesTree = BPlusTree()
