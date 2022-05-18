@@ -8,6 +8,7 @@ from flask import Flask, render_template, request, flash, redirect, url_for
 import flask_profiler
 import sqlite3
 import threading
+import BPlusTreeV2
 
 
 from flask_cors import CORS, cross_origin
@@ -108,6 +109,7 @@ def agregarOrden():
     }
     '''
     idOrden = str(uuid.uuid4())
+    bplustree = BPlusTreeV2.BPlusTree(order=4)
     solicitud = request.get_json(force=True)
     if inventario.exists(solicitud['producto']):
         if(int(inventario.get_val(solicitud['producto'])['INVENTARIO'])>=solicitud['cantidad']):
@@ -119,8 +121,11 @@ def agregarOrden():
                     'ESTADO':'PENDIENTE', 
                     'TOTAL': totalOrden,
                     'CLIENTE': solicitud['cliente']
+                        
+                    
                 })
-                # clientesTree.insert("Cliente", idOrden)
+                
+                bplustree.insert('Cliente',idOrden)
                 inventario.set_val(solicitud['producto'],
                 {
                     'PRECIO' :  inventario.get_val(solicitud['producto'])['PRECIO'],
