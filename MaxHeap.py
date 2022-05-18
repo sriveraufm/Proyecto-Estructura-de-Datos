@@ -12,10 +12,10 @@ class MaxHeap:
         self.Heap = {}
         for i in range(self.maxsize + 1):
             self.Heap[i] = {
-                'ID': 0,
-                'TOTAL': 0}
+                'ID': '',
+                'TOTAL': -1}
         self.Heap[0] = {
-            'ID': 0,
+            'ID': '',
             'TOTAL': sys.maxsize
         }
         self.FRONT = 1
@@ -77,7 +77,6 @@ class MaxHeap:
 
     # Function to insert a node into the heap
     def insert(self, element):
-
         if self.size >= self.maxsize:
             return
         self.size += 1
@@ -110,6 +109,59 @@ class MaxHeap:
         self.size -= 1
         self.maxHeapify(self.FRONT)
         return popped
-        
+
     def full(self):
         return self.maxsize == self.size
+
+    def empty(self):
+        return self.size == 0
+    
+    def queue(self):
+        queue = []
+        for i in range(1, self.size + 1):
+            queue.append(self.Heap[i]['ID'])
+        return queue
+
+    def delete(self, key):
+        for i in range(1, self.size + 1):
+                if self.Heap[i]['ID'] == key:
+                    print('mega nani')
+                    print(self.Heap[i])
+                    self.Heap[i] = {
+                        'ID': '',
+                        'TOTAL': -1
+                        }
+                    self.size -= 1
+                    self.maxHeapify(self.FRONT)
+                    break
+        current = self.size
+        print('nani')
+        print(self.Heap)
+        while (self.Heap[current]['TOTAL'] > self.Heap[self.parent(current)]['TOTAL']):
+            self.swap(current, self.parent(current))
+            current = self.parent(current)
+        #
+
+
+test = MaxHeap(15)
+test.insert({
+    'ID': 'id1',
+    'TOTAL': 100
+})
+test.insert({
+    'ID': 'id2',
+    'TOTAL': 1003
+})
+# test.insert({
+#     'ID': 'id4',
+#     'TOTAL': 103
+# })
+test.insert({
+    'ID': 'id3',
+    'TOTAL': 10
+})
+print('esto')
+test.Print()
+print('del')
+test.delete('id2')
+test.Print()

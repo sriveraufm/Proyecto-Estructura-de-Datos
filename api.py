@@ -36,36 +36,6 @@ TREBLLE_INFO = {
     'project_id': os.environ.get('jGpVSR2BBcvYMrbA')
 }
 
-# app.config["flask_profiler"] = {
-#     "enabled": app.config["DEBUG"],
-#     "storage": {
-#         "engine": "sqlite"
-#     },
-#     "ignore": [
-# 	"^/static/.*"
-# 	]
-# }
-# app.config["flask_profiler"] = {
-#     "enabled": app.config["DEBUG"],
-#     "storage": {
-#         "engine": "sqlite"
-#     },
-#     "basicAuth":{
-#         "enabled": True,
-#         "username": "admin",
-#         "password": "admin"
-#     },
-#     "ignore": [
-# 	    "^/static/.*"
-# 	]
-# }
-
-#  "basicAuth":{
-    #     "enabled": True,
-    #     "username": "admin",
-    #     "password": "admin"
-    # },
-
 @app.route('/ordenes', methods=['GET'])
 def imprimirOrdenes():
     '''
@@ -121,7 +91,7 @@ def queueOrden():
     if ordenesQueue.empty():
         return jsonify({'message' : 'No hay ordenes en la lista de espera'})
     else:
-        return jsonify({'message' : ordenesQueue.queue})
+        return jsonify({'queue' : ordenesQueue.queue()})
 
 
 # generar orden
@@ -164,8 +134,6 @@ def agregarOrden():
             return jsonify({'message' : "El producto que desea comprar no cuenta con suficiente existencias, lo sentimos."})
     else:
         return jsonify({'message' : "El producto que desea comprar no existe"})
-    # ordenes.append([j for j in [orden,"PENDIENTE",0]])
-    #    
 # realizar pago
 @app.route('/ordenes/pagar', methods=['PUT'])
 def pagar():
@@ -206,7 +174,7 @@ def anular():
     }'''
     solicitud = request.get_json(force=True)
     if ordenes.delete(solicitud['id']):
-        ordenesQueue.anular(solicitud['id'])
+        # ordenesQueue.anular(solicitud['id']) esto falta...
         return(jsonify({"message" :"Orden eliminada con exito"}))
     else:
         return(jsonify({"message" : "La orden no ha sido encontrada"}))
@@ -318,7 +286,7 @@ def inventarioDescuentos():
 
 @app.route('/ordenes/despachar/registro', methods=['GET'])
 def registroGet():
-    '''Permite ver el registro del uso de apis'''
+    '''Permite ver el registro de ordenes despachadas'''
     return jsonify({'message' : " -> ".join(registroDespacho)})
 
 
