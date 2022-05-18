@@ -133,6 +133,12 @@ def agregarOrden():
     '''
     idOrden = str(uuid.uuid4())
     solicitud = request.get_json(force=True)
+    if str(solicitud['cliente']) == '':
+        return jsonify({'alerta' : "Falta cliente"})
+    if str(solicitud['producto']) == '':
+        return jsonify({'alerta' : "Falta producto"})
+    if str(solicitud['cantidad']) == '' or int(solicitud['cantidad']) <= 0:
+        return jsonify({'alerta' : "Falta cantidad"})
     if inventario.exists(str(solicitud['producto']).upper()):
         if(int(inventario.get_val(str(solicitud['producto']).upper())['INVENTARIO'])>=int(solicitud['cantidad'])):
             if not ordenesQueue.full():
@@ -305,7 +311,9 @@ def inventarioDescuentos():
     "descuento": 40
     }'''
     solicitud = request.get_json(force=True)
-    if(solicitud['descuento'] > 100):
+    if str(solicitud['descuento']) == '':
+        return jsonify({'message' : "El producto que desea aplicar el descuento no existe"})
+    if(float(solicitud['descuento']) > 100):
         return jsonify({'message' : "El descuento debe ser un porcentaje"})
     if inventario.exists(str(solicitud['producto']).upper()):
         inventario.set_val(str(solicitud['producto']).upper(), {
