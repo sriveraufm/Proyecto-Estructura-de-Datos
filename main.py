@@ -75,3 +75,5 @@ inventario.set_val('PASTEL', {
     "PRECIO": 150,
     "INVENTARIO": 333
 })
+import re
+cProfile.run('re.compile("api.py")') 
