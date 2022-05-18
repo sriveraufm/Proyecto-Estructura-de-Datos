@@ -40,7 +40,10 @@ class HashTable:
         else:
             self.keys.append(key)
             bucket.append((key, val))
-    # Return searched value with specific key
+    def delete(self, key):
+        hashed_key = hash(key) % self.size
+        self.hash_table[hashed_key] = []
+        self.keys.remove(key)
     def get_val(self, key):
     # Get the index from the key using
     # hash function
@@ -66,28 +69,15 @@ class HashTable:
         if found_key:
             return record_val
         else:
-            return "No record found"
-
-    # Remove a value with specific key
-    def delete_val(self, key):
-    # Get the index from the key using
-    # hash function
+            return None
+    def exists(self, key):
+        # Get the index from the key using
+        # hash function
         hashed_key = hash(key) % self.size
-    # Get the bucket corresponding to index
-        bucket = self.hash_table[hashed_key]
-        found_key = False
-        for index in range(len(bucket)):
-            record = bucket[index]
-            record_key, record_val = record
-            # check if the bucket has same key as
-            # the key to be deleted
-            if str(record_key) == str(key):
-                found_key = True
-                break
-        if found_key is True:
-            # cursor.execute("DELETE FROM Ordenes WHERE ID = '%s'" % (key))
-            bucket.pop(index)
-        return (found_key)
+        if len(self.hash_table[hashed_key]) > 0:
+            return True
+        else:
+            return False
     def get_table(self):
         return list(filter(None, self.hash_table))
     # To print the items of hash map
@@ -95,17 +85,13 @@ class HashTable:
         return "".join(str(item) for item in self.hash_table)
         # return self.hash_table
 
-# test = HashTable(1)
+# test = HashTable(3)
 # test.set_val('t1', {'val1':131, 'val2': 'tetet', 'val3': 'saber'})
-# # test.set_val('t2', 'val2')
-# from itertools import chain
-# print(chain.from_iterable(list(test)))
 
-# # print(test.get_val('t1'))
-# res = [{a: {b}} for (a, b) in zip(test.keys, test.get_val())]
 
-# # printing result
-# print("The constructed dictionary : " + str(res))
-# print(hash('orden1'))
-# print(hash('orden2'))
-# print(hash('orden3'))
+# print(test.get_table())
+# print(test.keys)
+
+# # print(test.get_table())
+# print(test.get_val('t1')['val1'])
+

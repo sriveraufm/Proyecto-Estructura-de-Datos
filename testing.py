@@ -1,71 +1,114 @@
-# from collections import defaultdict
+# A complete working Python program to demonstrate all
+# insertion methods of linked list
 
-# graph = defaultdict(list)
+# Node class
+class Node:
 
-# def addEdge(graph,u,v):
-#     graph[u].append(v)
- 
-# # definition of function
-def generate_edges(graph):
-    edges = []
- 
-    # for each node in graph
-    for node in graph:
-         
-        # for each neighbour node of a single node
-        for neighbour in graph[node]:
-             
-            # if edge exists then append
-            edges.append((node, neighbour))
-    return edges
+	# Function to initialise the node object
+	def __init__(self, data):
+		self.data = data # Assign data
+		self.next = None # Initialize next as null
 
-ciudad = {
-    0 : [10, 15],#CARRETERA
-    1 : [3, 5, 2, 6],
-    2 : [1, 7, 6],
-    3 : [7, 1, 8],
-    4 : [1, 3, 8, 9, 5],
-    5 : [1, 8, 10],
-    6 : [1, 17],
-    7 : [19, 11],
-    8 : [11, 3, 9, 10],
-    9 : [13, 11, 8, 10,4],
-    10 : [0, 15, 14, 9, 5],
-    11 : [12, 13, 7],
-    12 : [11, 8, 13, 21],
-    13 : [12, 14, 9],
-    14 : [13, 10],
-    15 : [0, 10, 16, 5],
-    16 : [15, 17],
-    17 : [6, 18],
-    18 : [17],
-    19 : [7],
-    # 20 : [],
-    21 : [12]
-}
 
-def find_all_paths(graph, start, end, path =[]):
-    path = path + [start]
-    if start == end:
-        return [path]
-    paths = []
-    for node in graph[start]:
-        if node not in path:
-            newpaths = find_all_paths(graph, node, end, path)
-        if 'newpaths' in locals():
-            for newpath in newpaths:
-                paths.append(newpath)
-    return paths
+# Linked List class contains a Node object
+class LinkedList:
 
-def find_shortest_path(graph, start, end, path =[]):
-    path = path + [start]
-    if start == end:
-        return path
-    shortest = None
-    for node in graph[start]:
-        if node not in path:
-            newpath = find_shortest_path(graph, node, end, path)
-            if newpath:
-                if not shortest or len(newpath) < len(shortest):
-                    shortest = newpath
-    return shortest
+	# Function to initialize head
+	def __init__(self):
+		self.head = None
+
+
+	# Function to insert a new node at the beginning
+	def push(self, new_data):
+
+		# 1 & 2: Allocate the Node &
+		#	 Put in the data
+		new_node = Node(new_data)
+
+		# 3. Make next of new Node as head
+		new_node.next = self.head
+
+		# 4. Move the head to point to new Node
+		self.head = new_node
+
+
+	# This function is in LinkedList class. Inserts a
+	# new node after the given prev_node. This method is
+	# defined inside LinkedList class shown above */
+	def insertAfter(self, prev_node, new_data):
+
+		# 1. check if the given prev_node exists
+		if prev_node is None:
+			print("The given previous node must inLinkedList.")
+			return
+
+		# 2. create new node &
+		#	 Put in the data
+		new_node = Node(new_data)
+
+		# 4. Make next of new Node as next of prev_node
+		new_node.next = prev_node.next
+
+		# 5. make next of prev_node as new_node
+		prev_node.next = new_node
+
+
+	# This function is defined in Linked List class
+	# Appends a new node at the end. This method is
+	# defined inside LinkedList class shown above */
+	def append(self, new_data):
+
+		# 1. Create a new node
+		# 2. Put in the data
+		# 3. Set next as None
+		new_node = Node(new_data)
+
+		# 4. If the Linked List is empty, then make the
+		# new node as head
+		if self.head is None:
+			self.head = new_node
+			return
+
+		# 5. Else traverse till the last node
+		last = self.head
+		while (last.next):
+			last = last.next
+
+		# 6. Change the next of last node
+		last.next = new_node
+
+
+	# Utility function to print the linked list
+	def printList(self):
+		temp = self.head
+		while (temp):
+			print(temp.data,end=" ")
+			temp = temp.next
+
+
+
+# Code execution starts here
+if __name__=='__main__':
+
+	# Start with the empty list
+	llist = LinkedList()
+
+	# Insert 6. So linked list becomes 6->None
+	llist.append(6)
+
+	# Insert 7 at the beginning. So linked list becomes 7->6->None
+	llist.push(7);
+
+	# Insert 1 at the beginning. So linked list becomes 1->7->6->None
+	llist.push(1);
+
+	# Insert 4 at the end. So linked list becomes 1->7->6->4->None
+	llist.append(4)
+
+	# Insert 8, after 7. So linked list becomes 1 -> 7-> 8-> 6-> 4-> None
+	llist.insertAfter(llist.head.next, 8)
+
+	print('Created linked list is: ')
+	llist.printList()
+
+# This code is contributed by Manikantan Narasimhan
